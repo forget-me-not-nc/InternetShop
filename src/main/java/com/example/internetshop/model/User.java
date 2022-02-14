@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.internetshop.model;
 
 import lombok.Data;
 
@@ -24,6 +24,6 @@ public class User
     private String login;
     private String password;
 
-//    @OneToOne(mappedBy = "user")
-//    private Account account;
+    @OneToOne(mappedBy = "user")
+    private Account account;
 }

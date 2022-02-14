@@ -1,4 +1,5 @@
-package com.example.model;
+package com.example.internetshop.model;
+
 
 import lombok.Data;
 
@@ -22,6 +23,6 @@ public class Category
     private Long id;
     private String name;
 
-//    @ManyToMany(mappedBy = "categories")
-//    private List<Book> books;
+    @ManyToMany(mappedBy = "categories")
+    private List<Book> books;
 }

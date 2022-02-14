@@ -1,4 +1,5 @@
-package com.example.model;
+package com.example.internetshop.model;
+
 
 import lombok.Data;
 
@@ -27,7 +28,7 @@ public class Author
     private String lastName;
     private String middleName;
 
-//    @ManyToMany(mappedBy = "authors")
-//    private List<Book> books;
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books;
 
 }

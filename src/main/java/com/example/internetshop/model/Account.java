@@ -1,4 +1,5 @@
-package com.example.model;
+package com.example.internetshop.model;
+
 
 import lombok.Data;
 
@@ -24,14 +25,14 @@ public class Account
     private boolean isActive;
     private BigDecimal balance;
 
-//    @OneToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-//
-//    @OneToOne
-//    @JoinColumn(name = "client_id")
-//    private Client client;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-//    @OneToMany(mappedBy = "account")
-//    private List<Order> order;
+    @OneToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @OneToMany(mappedBy = "account")
+    private List<Order> order;
 }

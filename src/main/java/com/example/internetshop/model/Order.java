@@ -1,4 +1,5 @@
-package com.example.model;
+package com.example.internetshop.model;
+
 
 import lombok.Data;
 import org.hibernate.annotations.Parameter;
@@ -29,14 +30,15 @@ public class Order
     private BigDecimal totalSum;
     private String address;
 
-//    @ManyToOne
-//    @JoinColumn(name = "account_id")
-//    private Account account;
-//
-//    @Type(type = "list-array")
-//    @Column(
-//            name = "books_ids",
-//            columnDefinition = "text[]"
-//    )
-//    private List<String> books;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    @ManyToMany
+    @JoinTable(
+            name = "orderHasBooks",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Book> books;
 }

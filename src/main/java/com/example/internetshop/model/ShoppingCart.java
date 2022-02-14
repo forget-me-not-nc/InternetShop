@@ -1,4 +1,5 @@
-package com.example.model;
+package com.example.internetshop.model;
+
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.internetshop.model;
 
 import lombok.Data;
 
@@ -28,6 +28,6 @@ public class Client
     private String phone;
     private String email;
 
-//    @OneToOne(mappedBy = "client")
-//    private Account account;
+    @OneToOne(mappedBy = "client")
+    private Account account;
 }
