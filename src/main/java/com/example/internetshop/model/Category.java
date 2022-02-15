@@ -20,7 +20,7 @@ import java.util.List;
 public class Category
 {
     @Id
-    private Long id;
+    private Integer id;
     private String name;
 
     @ManyToMany(mappedBy = "categories")

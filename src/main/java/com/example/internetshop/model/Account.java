@@ -21,7 +21,7 @@ import java.util.List;
 public class Account
 {
     @Id
-    private Long id;
+    private Integer id;
     private boolean isActive;
     private BigDecimal balance;
 

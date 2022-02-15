@@ -23,10 +23,11 @@ import java.util.List;
 public class Author
 {
     @Id
-    private Long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String middleName;
+    private String info;
 
     @ManyToMany(mappedBy = "authors")
     private List<Book> books;

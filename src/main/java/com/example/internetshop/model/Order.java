@@ -25,7 +25,7 @@ import java.util.List;
 public class Order
 {
     @Id
-    private Long id;
+    private Integer id;
     private LocalDateTime orderDate;
     private BigDecimal totalSum;
     private String address;
@@ -34,11 +34,15 @@ public class Order
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToMany
-    @JoinTable(
-            name = "orderHasBooks",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private List<Book> books;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "orderHasBooks",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "book_id")
+//    )
+//    private List<Book> books;
+
+    @Column(columnDefinition = "int[]")
+    @Type(type = "com.example.internetshop.settings.CustomIntegerArrayType")
+    private Integer[] books;
 }

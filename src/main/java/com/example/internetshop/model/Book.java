@@ -20,7 +20,7 @@ import java.util.List;
 public class Book
 {
     @Id
-    private Long id;
+    private Integer id;
     private BigDecimal price;
     private String name;
     private String publishingHouse;
@@ -40,7 +40,4 @@ public class Book
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
-
-    @ManyToMany(mappedBy = "books")
-    private List<Order> orders;
 }

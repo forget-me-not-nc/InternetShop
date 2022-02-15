@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 public class Client
 {
     @Id
-    private Long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String middleName;

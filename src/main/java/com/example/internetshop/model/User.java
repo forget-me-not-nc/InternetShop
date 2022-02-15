@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 public class User
 {
     @Id
-    private Long id;
+    private Integer id;
     private String login;
     private String password;
 
