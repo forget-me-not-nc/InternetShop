@@ -2,14 +2,11 @@ package com.example.internetshop.model;
 
 
 import lombok.Data;
-import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,14 +30,6 @@ public class Order
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "orderHasBooks",
-//            joinColumns = @JoinColumn(name = "order_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id")
-//    )
-//    private List<Book> books;
 
     @Column(columnDefinition = "int[]")
     @Type(type = "com.example.internetshop.settings.CustomIntegerArrayType")
