@@ -19,15 +19,15 @@ import javax.persistence.OneToOne;
 @Data
 public class Client
 {
-    @Id
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private String middleName;
-    private String address;
-    private String phone;
-    private String email;
+	@Id
+	private Integer id;
+	private String firstName;
+	private String lastName;
+	private String middleName;
+	private String address;
+	private String phone;
+	private String email;
 
-    @OneToOne(mappedBy = "client")
-    private Account account;
+	@OneToOne(mappedBy = "client")
+	private Account account;
 }

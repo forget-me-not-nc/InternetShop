@@ -19,11 +19,11 @@ import javax.persistence.OneToOne;
 @Data
 public class User
 {
-    @Id
-    private Integer id;
-    private String login;
-    private String password;
+	@Id
+	private Integer id;
+	private String login;
+	private String password;
 
-    @OneToOne(mappedBy = "user")
-    private Account account;
+	@OneToOne(mappedBy = "user")
+	private Account account;
 }

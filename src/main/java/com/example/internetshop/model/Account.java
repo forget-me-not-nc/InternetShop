@@ -20,19 +20,19 @@ import java.util.List;
 @Data
 public class Account
 {
-    @Id
-    private Integer id;
-    private boolean isActive;
-    private BigDecimal balance;
+	@Id
+	private Integer id;
+	private boolean isActive;
+	private BigDecimal balance;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    @OneToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+	@OneToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
 
-    @OneToMany(mappedBy = "account")
-    private List<Order> order;
+	@OneToMany(mappedBy = "account")
+	private List<Order> order;
 }

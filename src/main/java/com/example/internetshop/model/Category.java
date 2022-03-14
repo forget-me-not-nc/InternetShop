@@ -3,7 +3,9 @@ package com.example.internetshop.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.List;
 
 /**
@@ -19,10 +21,10 @@ import java.util.List;
 @Data
 public class Category
 {
-    @Id
-    private Integer id;
-    private String name;
+	@Id
+	private Integer id;
+	private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Book> books;
+	@ManyToMany(mappedBy = "categories")
+	private List<Book> books;
 }

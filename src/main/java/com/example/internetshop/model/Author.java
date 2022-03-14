@@ -6,7 +6,6 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import java.util.List;
 
 /**
@@ -22,14 +21,14 @@ import java.util.List;
 @Data
 public class Author
 {
-    @Id
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private String middleName;
-    private String info;
+	@Id
+	private Integer id;
+	private String firstName;
+	private String lastName;
+	private String middleName;
+	private String info;
 
-    @ManyToMany(mappedBy = "authors")
-    private List<Book> books;
+	@ManyToMany(mappedBy = "authors")
+	private List<Book> books;
 
 }

@@ -21,17 +21,17 @@ import java.time.LocalDateTime;
 @Data
 public class Order
 {
-    @Id
-    private Integer id;
-    private LocalDateTime orderDate;
-    private BigDecimal totalSum;
-    private String address;
+	@Id
+	private Integer id;
+	private LocalDateTime orderDate;
+	private BigDecimal totalSum;
+	private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 
-    @Column(columnDefinition = "int[]")
-    @Type(type = "com.example.internetshop.settings.CustomIntegerArrayType")
-    private Integer[] books;
+	@Column(columnDefinition = "int[]")
+	@Type(type = "com.example.internetshop.settings.CustomIntegerArrayType")
+	private Integer[] books;
 }

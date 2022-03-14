@@ -3,7 +3,6 @@ package com.example.internetshop.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -19,6 +18,6 @@ import java.util.List;
 @Data
 public class ShoppingCart
 {
-    private List<Book> selectedBooks;
-    private BigDecimal currentSum;
+	private List<Book> selectedBooks;
+	private BigDecimal currentSum;
 }
