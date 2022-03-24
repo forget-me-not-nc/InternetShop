@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.AccountController
@@ -17,16 +19,17 @@ import org.springframework.web.bind.annotation.*;
  * @Version AccountController: 1.0
  */
 
-@RestController("/accounts")
+@RestController
+@RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountController
 {
 	private final AccountServiceImpl accountService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<Page<Account>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<Account>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
-		return ResponseEntity.ok(accountService.getAll(page, size));
+		return ResponseEntity.ok(accountService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
@@ -36,13 +39,13 @@ public class AccountController
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Account> update(@RequestParam Account entity)
+	public ResponseEntity<Account> update(@RequestBody Account entity)
 	{
 		return ResponseEntity.ok(accountService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Account> create(@RequestParam Account entity)
+	public ResponseEntity<Account> create(@RequestBody Account entity)
 	{
 		return ResponseEntity.ok(accountService.create(entity));
 	}

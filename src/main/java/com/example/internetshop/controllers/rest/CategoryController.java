@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.CategoryController
@@ -17,16 +19,17 @@ import org.springframework.web.bind.annotation.*;
  * @Version CategoryController: 1.0
  */
 
-@RestController("/categories")
+@RestController
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController
 {
 	private final CategoryServiceImpl categoryService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<Page<Category>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<Category>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
-		return ResponseEntity.ok(categoryService.getAll(page, size));
+		return ResponseEntity.ok(categoryService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
@@ -36,13 +39,13 @@ public class CategoryController
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Category> update(@RequestParam Category entity)
+	public ResponseEntity<Category> update(@RequestBody Category entity)
 	{
 		return  ResponseEntity.ok(categoryService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Category> create(@RequestParam Category entity)
+	public ResponseEntity<Category> create(@RequestBody Category entity)
 	{
 		return ResponseEntity.ok(categoryService.create(entity));
 	}

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.BookController
@@ -18,16 +20,17 @@ import org.springframework.web.bind.annotation.*;
  * @Version BookController: 1.0
  */
 
-@RestController("/books")
+@RestController
+@RequestMapping("/books")
 @RequiredArgsConstructor
 public class BookController
 {
 	private final BookServiceImpl bookService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<Page<Book>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<Book>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
-		return ResponseEntity.ok(bookService.getAll(page, size));
+		return ResponseEntity.ok(bookService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
@@ -37,13 +40,13 @@ public class BookController
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Book> update(@RequestParam Book entity)
+	public ResponseEntity<Book> update(@RequestBody Book entity)
 	{
 		return ResponseEntity.ok(bookService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Book> create(@RequestParam Book entity)
+	public ResponseEntity<Book> create(@RequestBody Book entity)
 	{
 		return ResponseEntity.ok(bookService.create(entity));
 	}

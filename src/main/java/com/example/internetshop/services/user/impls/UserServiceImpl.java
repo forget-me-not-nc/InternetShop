@@ -1,6 +1,7 @@
 package com.example.internetshop.services.user.impls;
 
 import com.example.internetshop.model.User;
+import com.example.internetshop.repositories.AccountRepository;
 import com.example.internetshop.repositories.UserRepository;
 import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -21,36 +22,35 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUserService
 {
-
-	private final UserRepository repository;
+	private final UserRepository userRepository;
 
 	@Override
 	public Page<User> getAll(Integer page, Integer size)
 	{
-		return repository.findAll(PageRequest.of(page, size));
+		return userRepository.findAll(PageRequest.of(page, size));
 	}
 
 	@Override
 	public User get(Integer id)
 	{
-		return repository.findById(id).orElse(null);
+		return userRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public User update(User user)
 	{
-		return repository.save(user);
+		return userRepository.save(user);
 	}
 
 	@Override
 	public User create(User user)
 	{
-		return repository.save(user);
+		return userRepository.save(user);
 	}
 
 	@Override
 	public void delete(Integer id)
 	{
-		repository.delete(get(id));
+		userRepository.delete(get(id));
 	}
 }

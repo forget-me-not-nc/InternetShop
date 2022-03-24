@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.OrderController
@@ -17,16 +19,17 @@ import org.springframework.web.bind.annotation.*;
  * @Version OrderController: 1.0
  */
 
-@RestController("/orders")
+@RestController
+@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController
 {
 	private final OrderServiceImpl orderService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<Page<Order>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<Order>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
-		return ResponseEntity.ok(orderService.getAll(page, size));
+		return ResponseEntity.ok(orderService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
@@ -36,13 +39,13 @@ public class OrderController
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Order> update(@RequestParam Order entity)
+	public ResponseEntity<Order> update(@RequestBody Order entity)
 	{
 		return ResponseEntity.ok(orderService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Order> create(@RequestParam Order entity)
+	public ResponseEntity<Order> create(@RequestBody Order entity)
 	{
 		return ResponseEntity.ok(orderService.create(entity));
 	}

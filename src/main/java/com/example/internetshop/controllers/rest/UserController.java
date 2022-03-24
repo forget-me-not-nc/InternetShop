@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.UserController
@@ -17,16 +20,17 @@ import org.springframework.web.bind.annotation.*;
  * @Version UserController: 1.0
  */
 
-@RestController("/users")
+@RestController
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController
 {
 	private final UserServiceImpl userService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<Page<User>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<User>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
-		return ResponseEntity.ok(userService.getAll(page, size));
+		return ResponseEntity.ok(userService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
@@ -36,13 +40,13 @@ public class UserController
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<User> update(@RequestParam User entity)
+	public ResponseEntity<User> update(@RequestBody User entity)
 	{
 		return ResponseEntity.ok(userService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<User> create(@RequestParam User entity)
+	public ResponseEntity<User> create(@RequestBody User entity)
 	{
 		return ResponseEntity.ok(userService.create(entity));
 	}

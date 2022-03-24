@@ -2,9 +2,7 @@ package com.example.internetshop.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +18,7 @@ import javax.persistence.OneToOne;
 public class User
 {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String login;
 	private String password;

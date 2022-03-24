@@ -2,7 +2,10 @@ package com.example.internetshop.services.account.impls;
 
 import com.example.internetshop.model.Account;
 import com.example.internetshop.repositories.AccountRepository;
+import com.example.internetshop.repositories.UserRepository;
 import com.example.internetshop.services.account.services.IAccountService;
+import com.example.internetshop.services.user.impls.UserServiceImpl;
+import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

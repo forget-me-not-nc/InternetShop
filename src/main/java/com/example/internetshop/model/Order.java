@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 public class Order
 {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private LocalDateTime orderDate;
 	private BigDecimal totalSum;

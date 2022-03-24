@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.AuthorController
@@ -17,16 +19,17 @@ import org.springframework.web.bind.annotation.*;
  * @Version AuthorController: 1.0
  */
 
-@RestController("/authors")
+@RestController
+@RequestMapping("/authors")
 @RequiredArgsConstructor
 public class AuthorController
 {
 	private final AuthorServiceImpl authorService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<Page<Author>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<Author>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
-		return ResponseEntity.ok(authorService.getAll(page, size));
+		return ResponseEntity.ok(authorService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
@@ -36,13 +39,13 @@ public class AuthorController
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Author> update(@RequestParam Author entity)
+	public ResponseEntity<Author> update(@RequestBody Author entity)
 	{
 		return ResponseEntity.ok(authorService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Author> create(@RequestParam Author entity)
+	public ResponseEntity<Author> create(@RequestBody Author entity)
 	{
 		return ResponseEntity.ok(authorService.create(entity));
 
