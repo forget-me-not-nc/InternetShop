@@ -1,5 +1,6 @@
 package com.example.internetshop.services.client.services;
 
+import com.example.internetshop.DTO.client.ClientDTO;
 import com.example.internetshop.model.Client;
 import com.example.internetshop.services.IGenericService;
 
@@ -12,7 +13,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IClientService: 1.0
  */
 
-public interface IClientService extends IGenericService<Client>
+public interface IClientService extends IGenericService<ClientDTO>
 {
-
+	Client getClient(Integer id);
 }

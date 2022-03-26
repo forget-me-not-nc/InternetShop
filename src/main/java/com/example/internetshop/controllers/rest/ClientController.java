@@ -1,9 +1,8 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.Client;
+import com.example.internetshop.DTO.client.ClientDTO;
 import com.example.internetshop.services.client.impls.ClientServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,25 +26,25 @@ public class ClientController
 	private final ClientServiceImpl clientService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Client>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<ClientDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(clientService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Client> get(@PathVariable Integer id)
+	public ResponseEntity<ClientDTO> get(@PathVariable Integer id)
 	{
 		return ResponseEntity.ok(clientService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Client> update(@RequestBody Client entity)
+	public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO entity)
 	{
 		return ResponseEntity.ok(clientService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Client> create(@RequestBody Client entity)
+	public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO entity)
 	{
 		return ResponseEntity.ok(clientService.create(entity));
 	}

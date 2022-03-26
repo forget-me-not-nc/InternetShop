@@ -1,9 +1,11 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.Account;
-import com.example.internetshop.services.account.impls.AccountServiceImpl;
+import com.example.internetshop.DTO.account.AccountCreateRequest;
+import com.example.internetshop.DTO.account.AccountDTO;
+import com.example.internetshop.DTO.account.AccountUpdateRequest;
+import com.example.internetshop.services.account.services.IAccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,33 +23,51 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
-@RequiredArgsConstructor
 public class AccountController
 {
-	private final AccountServiceImpl accountService;
+	private IAccountService accountService;
+
+	@Autowired
+	public void setAccountService(IAccountService accountService)
+	{
+		this.accountService = accountService;
+	}
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Account>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<AccountDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(accountService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Account> get(@PathVariable Integer id)
+	public ResponseEntity<AccountDTO> get(@PathVariable Integer id)
 	{
 		return ResponseEntity.ok(accountService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Account> update(@RequestBody Account entity)
+	public ResponseEntity<AccountDTO> update(@RequestBody AccountUpdateRequest entity)
 	{
-		return ResponseEntity.ok(accountService.update(entity));
+		return ResponseEntity.ok(accountService.update(
+				AccountDTO.builder()
+						.id(entity.getId())
+						.isActive(entity.isActive())
+						.balance(entity.getBalance())
+						.build()
+		));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Account> create(@RequestBody Account entity)
+	public ResponseEntity<AccountDTO> create(@RequestBody AccountCreateRequest entity)
 	{
-		return ResponseEntity.ok(accountService.create(entity));
+		return ResponseEntity.ok(accountService.create(
+				AccountDTO.builder()
+						.userId(entity.getUserId())
+						.clientId(entity.getClientId())
+						.balance(entity.getBalance())
+						.isActive(entity.isActive())
+						.build()
+		));
 	}
 
 	@DeleteMapping("/delete/{id}")

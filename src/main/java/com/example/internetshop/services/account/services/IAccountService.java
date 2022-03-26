@@ -1,6 +1,6 @@
 package com.example.internetshop.services.account.services;
 
-import com.example.internetshop.model.Account;
+import com.example.internetshop.DTO.account.AccountDTO;
 import com.example.internetshop.services.IGenericService;
 
 /**
@@ -12,7 +12,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IAccountService: 1.0
  */
 
-public interface IAccountService extends IGenericService<Account>
+public interface IAccountService extends IGenericService<AccountDTO>
 {
 
 }

@@ -1,6 +1,6 @@
 package com.example.internetshop.services.book.services;
 
-import com.example.internetshop.model.Book;
+import com.example.internetshop.DTO.book.BookDTO;
 import com.example.internetshop.services.IGenericService;
 
 /**
@@ -12,7 +12,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IBookService: 1.0
  */
 
-public interface IBookService extends IGenericService<Book>
+public interface IBookService extends IGenericService<BookDTO>
 {
 
 }

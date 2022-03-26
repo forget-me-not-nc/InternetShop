@@ -1,11 +1,10 @@
 package com.example.internetshop.services.author.impls;
 
-import com.example.internetshop.model.Author;
+import com.example.internetshop.DTO.author.AuthorDTO;
 import com.example.internetshop.repositories.AuthorRepository;
 import com.example.internetshop.services.author.services.IAuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,33 +23,34 @@ public class AuthorServiceImpl implements IAuthorService
 
 	private final AuthorRepository repository;
 
+
 	@Override
-	public Page<Author> getAll(Integer page, Integer size)
+	public Page<AuthorDTO> getAll(Integer page, Integer size)
 	{
-		return repository.findAll(PageRequest.of(page, size));
+		return null;
 	}
 
 	@Override
-	public Author get(Integer id)
+	public AuthorDTO get(Integer id)
 	{
-		return repository.findById(id).orElse(null);
+		return null;
 	}
 
 	@Override
-	public Author update(Author author)
+	public AuthorDTO update(AuthorDTO authorDTO)
 	{
-		return repository.save(author);
+		return null;
 	}
 
 	@Override
-	public Author create(Author author)
+	public AuthorDTO create(AuthorDTO authorDTO)
 	{
-		return repository.save(author);
+		return null;
 	}
 
 	@Override
 	public void delete(Integer id)
 	{
-		repository.delete(get(id));
+
 	}
 }

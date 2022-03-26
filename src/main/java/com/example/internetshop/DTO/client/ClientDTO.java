@@ -1,30 +1,25 @@
-package com.example.internetshop.model;
+package com.example.internetshop.DTO.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 /**
  * Created by IntelliJ IDEA.
- * InternetShop.Client
+ * InternetShop.ClientDTO
  *
  * @Author: Palijchuk Nazar
- * @DateTime: 12.02.2022|17:39
- * @Version Client: 1.0
+ * @DateTime: 24.03.2022|23:10
+ * @Version ClientDTO: 1.0
  */
 
-@Entity(name = "clients")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Client
+public class ClientDTO
 {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String firstName;
 	private String lastName;
@@ -32,7 +27,4 @@ public class Client
 	private String address;
 	private String phone;
 	private String email;
-
-	@OneToOne(mappedBy = "client")
-	private Account account;
 }

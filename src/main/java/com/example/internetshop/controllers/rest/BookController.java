@@ -1,10 +1,8 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.Book;
-import com.example.internetshop.repositories.BookRepository;
+import com.example.internetshop.DTO.book.BookDTO;
 import com.example.internetshop.services.book.impls.BookServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,25 +26,25 @@ public class BookController
 	private final BookServiceImpl bookService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Book>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<BookDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(bookService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Book> get(@PathVariable Integer id)
+	public ResponseEntity<BookDTO> get(@PathVariable Integer id)
 	{
 		return ResponseEntity.ok(bookService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Book> update(@RequestBody Book entity)
+	public ResponseEntity<BookDTO> update(@RequestBody BookDTO entity)
 	{
 		return ResponseEntity.ok(bookService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Book> create(@RequestBody Book entity)
+	public ResponseEntity<BookDTO> create(@RequestBody BookDTO entity)
 	{
 		return ResponseEntity.ok(bookService.create(entity));
 	}

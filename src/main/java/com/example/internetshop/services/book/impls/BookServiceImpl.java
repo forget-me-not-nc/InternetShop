@@ -1,11 +1,10 @@
 package com.example.internetshop.services.book.impls;
 
-import com.example.internetshop.model.Book;
+import com.example.internetshop.DTO.book.BookDTO;
 import com.example.internetshop.repositories.BookRepository;
 import com.example.internetshop.services.book.services.IBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,33 +23,34 @@ public class BookServiceImpl implements IBookService
 
 	private final BookRepository repository;
 
+
 	@Override
-	public Page<Book> getAll(Integer page, Integer size)
+	public Page<BookDTO> getAll(Integer page, Integer size)
 	{
-		return repository.findAll(PageRequest.of(page, size));
+		return null;
 	}
 
 	@Override
-	public Book get(Integer id)
+	public BookDTO get(Integer id)
 	{
-		return repository.findById(id).orElse(null);
+		return null;
 	}
 
 	@Override
-	public Book update(Book book)
+	public BookDTO update(BookDTO bookDTO)
 	{
-		return repository.save(book);
+		return null;
 	}
 
 	@Override
-	public Book create(Book book)
+	public BookDTO create(BookDTO bookDTO)
 	{
-		return repository.save(book);
+		return null;
 	}
 
 	@Override
 	public void delete(Integer id)
 	{
-		repository.delete(get(id));
+
 	}
 }

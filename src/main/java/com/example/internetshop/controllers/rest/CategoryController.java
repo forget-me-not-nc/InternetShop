@@ -1,9 +1,8 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.Category;
+import com.example.internetshop.DTO.category.CategoryDTO;
 import com.example.internetshop.services.category.impls.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,25 +26,25 @@ public class CategoryController
 	private final CategoryServiceImpl categoryService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Category>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<CategoryDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(categoryService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Category> get(@PathVariable Integer id)
+	public ResponseEntity<CategoryDTO> get(@PathVariable Integer id)
 	{
-		return  ResponseEntity.ok(categoryService.get(id));
+		return ResponseEntity.ok(categoryService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Category> update(@RequestBody Category entity)
+	public ResponseEntity<CategoryDTO> update(@RequestBody CategoryDTO entity)
 	{
-		return  ResponseEntity.ok(categoryService.update(entity));
+		return ResponseEntity.ok(categoryService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Category> create(@RequestBody Category entity)
+	public ResponseEntity<CategoryDTO> create(@RequestBody CategoryDTO entity)
 	{
 		return ResponseEntity.ok(categoryService.create(entity));
 	}

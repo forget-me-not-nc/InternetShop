@@ -1,11 +1,10 @@
 package com.example.internetshop.services.category.impls;
 
-import com.example.internetshop.model.Category;
+import com.example.internetshop.DTO.category.CategoryDTO;
 import com.example.internetshop.repositories.CategoryRepository;
 import com.example.internetshop.services.category.services.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,33 +23,34 @@ public class CategoryServiceImpl implements ICategoryService
 
 	private final CategoryRepository repository;
 
+
 	@Override
-	public Page<Category> getAll(Integer page, Integer size)
+	public Page<CategoryDTO> getAll(Integer page, Integer size)
 	{
-		return repository.findAll(PageRequest.of(page, size));
+		return null;
 	}
 
 	@Override
-	public Category get(Integer id)
+	public CategoryDTO get(Integer id)
 	{
-		return repository.findById(id).orElse(null);
+		return null;
 	}
 
 	@Override
-	public Category update(Category category)
+	public CategoryDTO update(CategoryDTO categoryDTO)
 	{
-		return repository.save(category);
+		return null;
 	}
 
 	@Override
-	public Category create(Category category)
+	public CategoryDTO create(CategoryDTO categoryDTO)
 	{
-		return repository.save(category);
+		return null;
 	}
 
 	@Override
 	public void delete(Integer id)
 	{
-		repository.delete(get(id));
+
 	}
 }

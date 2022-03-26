@@ -1,9 +1,8 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.Author;
+import com.example.internetshop.DTO.author.AuthorDTO;
 import com.example.internetshop.services.author.impls.AuthorServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,25 +26,25 @@ public class AuthorController
 	private final AuthorServiceImpl authorService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Author>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<AuthorDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(authorService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Author> get(@PathVariable Integer id)
+	public ResponseEntity<AuthorDTO> get(@PathVariable Integer id)
 	{
 		return ResponseEntity.ok(authorService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Author> update(@RequestBody Author entity)
+	public ResponseEntity<AuthorDTO> update(@RequestBody AuthorDTO entity)
 	{
 		return ResponseEntity.ok(authorService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Author> create(@RequestBody Author entity)
+	public ResponseEntity<AuthorDTO> create(@RequestBody AuthorDTO entity)
 	{
 		return ResponseEntity.ok(authorService.create(entity));
 

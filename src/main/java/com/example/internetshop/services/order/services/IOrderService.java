@@ -1,6 +1,6 @@
 package com.example.internetshop.services.order.services;
 
-import com.example.internetshop.model.Order;
+import com.example.internetshop.DTO.order.OrderDTO;
 import com.example.internetshop.services.IGenericService;
 
 /**
@@ -12,7 +12,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IOrderService: 1.0
  */
 
-public interface IOrderService extends IGenericService<Order>
+public interface IOrderService extends IGenericService<OrderDTO>
 {
 
 }

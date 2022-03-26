@@ -1,9 +1,8 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.Order;
+import com.example.internetshop.DTO.order.OrderDTO;
 import com.example.internetshop.services.order.impls.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,25 +26,25 @@ public class OrderController
 	private final OrderServiceImpl orderService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Order>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<OrderDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(orderService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Order> get(@PathVariable Integer id)
+	public ResponseEntity<OrderDTO> get(@PathVariable Integer id)
 	{
 		return ResponseEntity.ok(orderService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Order> update(@RequestBody Order entity)
+	public ResponseEntity<OrderDTO> update(@RequestBody OrderDTO entity)
 	{
 		return ResponseEntity.ok(orderService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<Order> create(@RequestBody Order entity)
+	public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO entity)
 	{
 		return ResponseEntity.ok(orderService.create(entity));
 	}

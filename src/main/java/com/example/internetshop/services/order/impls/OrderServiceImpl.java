@@ -1,11 +1,10 @@
 package com.example.internetshop.services.order.impls;
 
-import com.example.internetshop.model.Order;
+import com.example.internetshop.DTO.order.OrderDTO;
 import com.example.internetshop.repositories.OrderRepository;
 import com.example.internetshop.services.order.services.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,33 +23,34 @@ public class OrderServiceImpl implements IOrderService
 
 	private final OrderRepository repository;
 
+
 	@Override
-	public Page<Order> getAll(Integer page, Integer size)
+	public Page<OrderDTO> getAll(Integer page, Integer size)
 	{
-		return repository.findAll(PageRequest.of(page, size));
+		return null;
 	}
 
 	@Override
-	public Order get(Integer id)
+	public OrderDTO get(Integer id)
 	{
-		return repository.findById(id).orElse(null);
+		return null;
 	}
 
 	@Override
-	public Order update(Order order)
+	public OrderDTO update(OrderDTO orderDTO)
 	{
-		return repository.save(order);
+		return null;
 	}
 
 	@Override
-	public Order create(Order order)
+	public OrderDTO create(OrderDTO orderDTO)
 	{
-		return repository.save(order);
+		return null;
 	}
 
 	@Override
 	public void delete(Integer id)
 	{
-		repository.delete(get(id));
+
 	}
 }

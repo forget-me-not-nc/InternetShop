@@ -10,5 +10,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc
 public class InternetShopApplication
 {
-	public static void main(String[] args) { SpringApplication.run(InternetShopApplication.class, args); }
+	public static void main(String[] args)
+	{
+		SpringApplication.run(InternetShopApplication.class, args);
+	}
 }

@@ -1,34 +1,28 @@
-package com.example.internetshop.model;
+package com.example.internetshop.DTO.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 /**
  * Created by IntelliJ IDEA.
- * InternetShop.User
+ * InternetShop.UserDTO
  *
  * @Author: Palijchuk Nazar
- * @DateTime: 12.02.2022|17:39
- * @Version User: 1.0
+ * @DateTime: 24.03.2022|23:09
+ * @Version UserDTO: 1.0
  */
 
-@Entity(name = "users")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User
+public class UserDTO
 {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String login;
 	private String password;
-
-	@OneToOne(mappedBy = "user")
-	private Account account;
+	private String firstName;
+	private String lastName;
 }

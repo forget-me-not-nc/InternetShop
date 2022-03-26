@@ -1,15 +1,21 @@
 package com.example.internetshop.services.account.impls;
 
+import com.example.internetshop.DTO.account.AccountDTO;
 import com.example.internetshop.model.Account;
 import com.example.internetshop.repositories.AccountRepository;
-import com.example.internetshop.repositories.UserRepository;
 import com.example.internetshop.services.account.services.IAccountService;
-import com.example.internetshop.services.user.impls.UserServiceImpl;
+import com.example.internetshop.services.client.services.IClientService;
 import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,38 +27,89 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-@RequiredArgsConstructor
 public class AccountServiceImpl implements IAccountService
 {
-	private final AccountRepository repository;
+	private AccountRepository repository;
+	private IClientService clientService;
+	private IUserService userService;
 
-	@Override
-	public Page<Account> getAll(Integer page, Integer size)
+	@Autowired
+	public void setRepository(AccountRepository repository)
 	{
-		return repository.findAll(PageRequest.of(page, size));
+		this.repository = repository;
+	}
+
+	@Autowired
+	public void setClientService(IClientService clientService)
+	{
+		this.clientService = clientService;
+	}
+
+
+	@Autowired
+	public void setUserService(IUserService userService)
+	{
+		this.userService = userService;
 	}
 
 	@Override
-	public Account get(Integer id)
+	public Page<AccountDTO> getAll(Integer page, Integer size)
 	{
-		return repository.findById(id).orElse(null);
+		Page<Account> accounts = repository.findAll(PageRequest.of(page, size));
+
+		var accountDTOs = accounts.get().map(this::convertToDTO).collect(Collectors.toList());
+
+		return new PageImpl<AccountDTO>(accountDTOs);
 	}
 
 	@Override
-	public Account update(Account account)
+	public AccountDTO get(Integer id)
 	{
-		return repository.save(account);
+		return convertToDTO(repository.getById(id));
 	}
 
 	@Override
-	public Account create(Account account)
+	public AccountDTO update(AccountDTO accountDTO)
 	{
-		return repository.save(account);
+		var account = repository.getById(accountDTO.getId());
+
+		account.setBalance(accountDTO.getBalance());
+		account.setActive(accountDTO.isActive());
+
+		return convertToDTO(account);
+	}
+
+	@Override
+	public AccountDTO create(AccountDTO accountDTO)
+	{
+		var account = repository.save(Account.builder()
+				.user(userService.getUser(accountDTO.getUserId()))
+				.client(clientService.getClient(accountDTO.getClientId()))
+				.isActive(accountDTO.isActive())
+				.balance(accountDTO.getBalance())
+				.build());
+
+		return convertToDTO(account);
 	}
 
 	@Override
 	public void delete(Integer id)
 	{
-		repository.delete(get(id));
+		Account account = repository.getById(id);
+
+		userService.delete(account.getUser().getId());
+		clientService.delete(account.getClient().getId());
+		repository.delete(account);
+	}
+
+	private AccountDTO convertToDTO(Account account)
+	{
+		return AccountDTO.builder()
+				.id(account.getId())
+				.clientId(account.getClient().getId())
+				.userId(account.getUser().getId())
+				.isActive(account.isActive())
+				.balance(account.getBalance())
+				.build();
 	}
 }

@@ -1,6 +1,6 @@
 package com.example.internetshop.services.author.services;
 
-import com.example.internetshop.model.Author;
+import com.example.internetshop.DTO.author.AuthorDTO;
 import com.example.internetshop.services.IGenericService;
 
 /**
@@ -12,7 +12,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IAuthorService: 1.0
  */
 
-public interface IAuthorService extends IGenericService<Author>
+public interface IAuthorService extends IGenericService<AuthorDTO>
 {
 
 }

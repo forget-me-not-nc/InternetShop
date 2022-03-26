@@ -1,6 +1,6 @@
 package com.example.internetshop.services.category.services;
 
-import com.example.internetshop.model.Category;
+import com.example.internetshop.DTO.category.CategoryDTO;
 import com.example.internetshop.services.IGenericService;
 
 /**
@@ -12,7 +12,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version ICategoryService: 1.0
  */
 
-public interface ICategoryService extends IGenericService<Category>
+public interface ICategoryService extends IGenericService<CategoryDTO>
 {
 
 }

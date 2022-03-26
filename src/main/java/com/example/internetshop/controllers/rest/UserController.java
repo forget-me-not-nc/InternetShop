@@ -1,15 +1,14 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.model.User;
+import com.example.internetshop.DTO.user.SimplifiedUser;
+import com.example.internetshop.DTO.user.UserDTO;
 import com.example.internetshop.services.user.impls.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,27 +27,29 @@ public class UserController
 	private final UserServiceImpl userService;
 
 	@GetMapping("/getAll")
-	public ResponseEntity<List<User>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	public ResponseEntity<List<UserDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(userService.getAll(page, size).getContent());
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<User> get(@PathVariable Integer id)
+	public ResponseEntity<UserDTO> get(@PathVariable Integer id)
 	{
 		return ResponseEntity.ok(userService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<User> update(@RequestBody User entity)
+	public ResponseEntity<SimplifiedUser> update(@RequestBody UserDTO entity)
 	{
-		return ResponseEntity.ok(userService.update(entity));
+		return ResponseEntity.ok(userService.simplifieUser(userService.update(entity)));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<User> create(@RequestBody User entity)
+	public ResponseEntity<SimplifiedUser> create(@RequestBody UserDTO entity,
+	                                             @RequestParam String firstName,
+	                                             @RequestParam String lastName)
 	{
-		return ResponseEntity.ok(userService.create(entity));
+		return ResponseEntity.ok(userService.simplifieUser(userService.create(entity)));
 	}
 
 	@DeleteMapping("/delete/{id}")
