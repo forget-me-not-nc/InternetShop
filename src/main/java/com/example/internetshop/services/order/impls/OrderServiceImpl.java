@@ -1,6 +1,5 @@
 package com.example.internetshop.services.order.impls;
 
-import com.example.internetshop.DTO.order.OrderDTO;
 import com.example.internetshop.repositories.OrderRepository;
 import com.example.internetshop.services.order.services.IOrderService;
 import lombok.RequiredArgsConstructor;
@@ -24,33 +23,5 @@ public class OrderServiceImpl implements IOrderService
 	private final OrderRepository repository;
 
 
-	@Override
-	public Page<OrderDTO> getAll(Integer page, Integer size)
-	{
-		return null;
-	}
 
-	@Override
-	public OrderDTO get(Integer id)
-	{
-		return null;
-	}
-
-	@Override
-	public OrderDTO update(OrderDTO orderDTO)
-	{
-		return null;
-	}
-
-	@Override
-	public OrderDTO create(OrderDTO orderDTO)
-	{
-		return null;
-	}
-
-	@Override
-	public void delete(Integer id)
-	{
-
-	}
 }

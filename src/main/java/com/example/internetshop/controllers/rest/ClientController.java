@@ -1,6 +1,7 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.DTO.client.ClientDTO;
+import com.example.internetshop.DTO.client.req.ClientModify;
+import com.example.internetshop.DTO.client.resp.ClientDTO;
 import com.example.internetshop.services.client.impls.ClientServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,25 +33,25 @@ public class ClientController
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<ClientDTO> get(@PathVariable Integer id)
+	public ResponseEntity<ClientDTO> get(@PathVariable Integer id) throws Exception
 	{
 		return ResponseEntity.ok(clientService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO entity)
+	public ResponseEntity<ClientDTO> update(@RequestBody ClientModify entity) throws Exception
 	{
 		return ResponseEntity.ok(clientService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO entity)
+	public ResponseEntity<ClientDTO> create(@RequestBody ClientModify entity) throws Exception
 	{
 		return ResponseEntity.ok(clientService.create(entity));
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
 		clientService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();

@@ -1,25 +1,19 @@
 package com.example.internetshop.services.user.impls;
 
-import com.example.internetshop.DTO.account.AccountDTO;
-import com.example.internetshop.DTO.client.ClientDTO;
-import com.example.internetshop.DTO.user.SimplifiedUser;
-import com.example.internetshop.DTO.user.UserDTO;
+import com.example.internetshop.DTO.client.resp.ClientDTO;
+import com.example.internetshop.DTO.user.req.UserModify;
+import com.example.internetshop.DTO.user.resp.UserDTO;
+import com.example.internetshop.model.Client;
 import com.example.internetshop.model.User;
 import com.example.internetshop.repositories.UserRepository;
-import com.example.internetshop.services.account.services.IAccountService;
-import com.example.internetshop.services.client.services.IClientService;
 import com.example.internetshop.services.user.services.IUserService;
-import lombok.AllArgsConstructor;
+import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 /**
@@ -32,29 +26,10 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService
 {
-	private UserRepository repository;
-	private IClientService clientService;
-	private IAccountService accountService;
-
-	@Autowired
-	public void setRepository(UserRepository repository)
-	{
-		this.repository = repository;
-	}
-
-	@Autowired
-	public void setClientService(IClientService clientService)
-	{
-		this.clientService = clientService;
-	}
-
-	@Autowired
-	public void setAccountService(IAccountService accountService)
-	{
-		this.accountService = accountService;
-	}
+	private final UserRepository repository;
 
 	@Override
 	public Page<UserDTO> getAll(Integer page, Integer size)
@@ -67,83 +42,73 @@ public class UserServiceImpl implements IUserService
 	}
 
 	@Override
-	public UserDTO get(Integer id)
+	public UserDTO get(Integer id) throws Exception
 	{
-		return convertToDTO(repository.getById(id));
+		try
+		{
+			return convertToDTO(repository.getById(id));
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getExceptionString(User.class, id));
+		}
 	}
 
 	@Override
-	public UserDTO update(UserDTO userDTO)
+	public UserDTO create(UserModify entity) throws Exception
 	{
-		return convertToDTO(repository.save(DTO_ToEntity(userDTO)));
+		try
+		{
+			return convertToDTO(repository.save(User.builder()
+					.login(entity.getUsername())
+					.password(entity.getPassword())
+					.build())
+			);
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
+		}
 	}
 
 	@Override
-	public UserDTO create(UserDTO userDTO)
+	public UserDTO update(UserModify entity) throws Exception
 	{
-		userDTO.setId(null);
+		try
+		{
+			User user = repository.getById(entity.getId());
 
-		User newUser = repository.save(DTO_ToEntity(userDTO));
-
-		accountService.create(
-				AccountDTO.builder()
-						.balance(BigDecimal.ZERO)
-						.isActive(false)
-						.userId(newUser.getId())
-						.clientId(
-								clientService.create(
-										ClientDTO.builder()
-												.phone("")
-												.middleName("")
-												.lastName(userDTO.getLastName())
-												.firstName(userDTO.getFirstName())
-												.email("")
-												.address("")
-												.build()
-								).getId()
-						)
-						.build()
-		);
-
-		return convertToDTO(newUser);
+			return convertToDTO(repository.save(User.builder()
+					.id(user.getId())
+					.login(entity.getUsername())
+					.password(entity.getPassword())
+					.build())
+			);
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
+		}
 	}
 
 	@Override
-	public void delete(Integer id)
+	public void delete(Integer id) throws Exception
 	{
-		repository.delete(repository.getById(id));
+		try
+		{
+			repository.delete(repository.getById(id));
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getExceptionString(User.class, id));
+		}
 	}
 
-	@Override
-	public User getUser(Integer id)
-	{
-		return repository.getById(id);
-	}
-
-	@Override
-	public SimplifiedUser simplifieUser(UserDTO user)
-	{
-		return SimplifiedUser.builder()
-				.id(user.getId())
-				.login(user.getLogin())
-				.build();
-	}
-
-	private UserDTO convertToDTO(User user)
+	private UserDTO convertToDTO(User entity)
 	{
 		return UserDTO.builder()
-				.id(user.getId())
-				.login(user.getLogin())
-				.password(user.getPassword())
-				.build();
-	}
-
-	private User DTO_ToEntity(UserDTO dto)
-	{
-		return User.builder()
-				.id(dto.getId())
-				.login(dto.getLogin())
-				.password(dto.getPassword())
+				.id(entity.getId())
+				.username(entity.getLogin())
 				.build();
 	}
 }

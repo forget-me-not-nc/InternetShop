@@ -1,8 +1,5 @@
 package com.example.internetshop.services.category.services;
 
-import com.example.internetshop.DTO.category.CategoryDTO;
-import com.example.internetshop.services.IGenericService;
-
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.ICategoryService
@@ -12,7 +9,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version ICategoryService: 1.0
  */
 
-public interface ICategoryService extends IGenericService<CategoryDTO>
+public interface ICategoryService
 {
 
 }

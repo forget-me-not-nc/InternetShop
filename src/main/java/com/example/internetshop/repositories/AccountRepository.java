@@ -1,6 +1,7 @@
 package com.example.internetshop.repositories;
 
 import com.example.internetshop.model.Account;
+import com.example.internetshop.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

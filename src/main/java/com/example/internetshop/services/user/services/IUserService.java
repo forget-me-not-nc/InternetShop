@@ -1,10 +1,10 @@
 package com.example.internetshop.services.user.services;
 
-import com.example.internetshop.DTO.user.SimplifiedUser;
-import com.example.internetshop.DTO.user.UserDTO;
-import com.example.internetshop.model.User;
-import com.example.internetshop.services.IGenericService;
-import com.example.internetshop.services.account.services.IAccountService;
+import com.example.internetshop.DTO.client.req.ClientModify;
+import com.example.internetshop.DTO.client.resp.ClientDTO;
+import com.example.internetshop.DTO.user.req.UserModify;
+import com.example.internetshop.DTO.user.resp.UserDTO;
+import org.springframework.data.domain.Page;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,10 +15,12 @@ import com.example.internetshop.services.account.services.IAccountService;
  * @Version IUserService: 1.0
  */
 
-public interface IUserService extends IGenericService<UserDTO>
+public interface IUserService
 {
-	SimplifiedUser simplifieUser(UserDTO user);
+	Page<UserDTO> getAll(Integer page, Integer size);
+	UserDTO get(Integer id) throws Exception;
 
-	User getUser(Integer id);
-
+	UserDTO create(UserModify entity) throws Exception;
+	UserDTO update(UserModify entity) throws Exception;
+	void delete(Integer id) throws Exception;
 }

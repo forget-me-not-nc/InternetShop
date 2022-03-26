@@ -1,20 +1,24 @@
 package com.example.internetshop.services.account.impls;
 
-import com.example.internetshop.DTO.account.AccountDTO;
+import com.example.internetshop.DTO.account.req.AccountCreate;
+import com.example.internetshop.DTO.account.req.AccountUpdate;
+import com.example.internetshop.DTO.account.resp.AccountDTO;
+import com.example.internetshop.DTO.client.req.ClientModify;
+import com.example.internetshop.DTO.user.req.UserModify;
 import com.example.internetshop.model.Account;
+import com.example.internetshop.model.Client;
+import com.example.internetshop.model.User;
 import com.example.internetshop.repositories.AccountRepository;
 import com.example.internetshop.services.account.services.IAccountService;
 import com.example.internetshop.services.client.services.IClientService;
 import com.example.internetshop.services.user.services.IUserService;
+import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.stream.Collectors;
 
 /**
@@ -27,30 +31,12 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements IAccountService
 {
-	private AccountRepository repository;
-	private IClientService clientService;
-	private IUserService userService;
-
-	@Autowired
-	public void setRepository(AccountRepository repository)
-	{
-		this.repository = repository;
-	}
-
-	@Autowired
-	public void setClientService(IClientService clientService)
-	{
-		this.clientService = clientService;
-	}
-
-
-	@Autowired
-	public void setUserService(IUserService userService)
-	{
-		this.userService = userService;
-	}
+	private final AccountRepository repository;
+	private final IUserService userService;
+	private final IClientService clientService;
 
 	@Override
 	public Page<AccountDTO> getAll(Integer page, Integer size)
@@ -63,53 +49,106 @@ public class AccountServiceImpl implements IAccountService
 	}
 
 	@Override
-	public AccountDTO get(Integer id)
+	public AccountDTO get(Integer id) throws Exception
 	{
-		return convertToDTO(repository.getById(id));
+		try
+		{
+			return convertToDTO(repository.getById(id));
+		}
+		catch(Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getExceptionString(Account.class, id));
+		}
+
 	}
 
 	@Override
-	public AccountDTO update(AccountDTO accountDTO)
+	public AccountDTO create(AccountCreate entity) throws Exception
 	{
-		var account = repository.getById(accountDTO.getId());
+		try
+		{
+			UserModify newUser = UserModify.builder()
+					.password(entity.getPassword())
+					.username(entity.getLogin())
+					.build();
 
-		account.setBalance(accountDTO.getBalance());
-		account.setActive(accountDTO.isActive());
+			ClientModify newClient = ClientModify.builder()
+					.phone(entity.getPhone())
+					.firstName(entity.getFirstName())
+					.middleName(" ")
+					.lastName(entity.getLastName())
+					.email(entity.getEmail())
+					.address(" ")
+					.build();
 
-		return convertToDTO(account);
+			return convertToDTO(
+					repository.save(Account.builder()
+							.balance(entity.getBalance())
+							.user(User.builder()
+									.id(userService.create(newUser).getId())
+									.build())
+							.client(Client.builder()
+									.id(clientService.create(newClient).getId())
+									.build())
+							.isActive(entity.isActive())
+							.build())
+			);
+
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
+		}
 	}
 
 	@Override
-	public AccountDTO create(AccountDTO accountDTO)
+	public AccountDTO update(AccountUpdate entity) throws Exception
 	{
-		var account = repository.save(Account.builder()
-				.user(userService.getUser(accountDTO.getUserId()))
-				.client(clientService.getClient(accountDTO.getClientId()))
-				.isActive(accountDTO.isActive())
-				.balance(accountDTO.getBalance())
-				.build());
+		try
+		{
+			Account account = repository.getById(entity.getId());
 
-		return convertToDTO(account);
+			return convertToDTO(repository.save(
+					Account.builder()
+							.isActive(entity.isActive())
+							.id(account.getId())
+							.balance(entity.getBalance())
+							.build()
+			));
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
+		}
 	}
 
 	@Override
-	public void delete(Integer id)
+	public void delete(Integer id) throws Exception
 	{
-		Account account = repository.getById(id);
+		try
+		{
+			Account account = repository.getById(id);
 
-		userService.delete(account.getUser().getId());
-		clientService.delete(account.getClient().getId());
-		repository.delete(account);
+			repository.delete(account);
+
+			userService.delete(account.getUser().getId());
+			clientService.delete(account.getClient().getId());
+		}
+		catch(Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getExceptionString(Account.class, id));
+		}
 	}
 
-	private AccountDTO convertToDTO(Account account)
+	private AccountDTO convertToDTO(Account entity)
 	{
 		return AccountDTO.builder()
-				.id(account.getId())
-				.clientId(account.getClient().getId())
-				.userId(account.getUser().getId())
-				.isActive(account.isActive())
-				.balance(account.getBalance())
+				.id(entity.getId())
+				.clientId(entity.getClient().getId())
+				.userId(entity.getUser().getId())
+				.balance(entity.getBalance())
+				.isActive(entity.isActive())
 				.build();
 	}
+
 }

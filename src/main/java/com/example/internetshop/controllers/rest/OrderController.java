@@ -1,6 +1,5 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.DTO.order.OrderDTO;
 import com.example.internetshop.services.order.impls.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,34 +24,34 @@ public class OrderController
 {
 	private final OrderServiceImpl orderService;
 
-	@GetMapping("/getAll")
-	public ResponseEntity<List<OrderDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-	{
-		return ResponseEntity.ok(orderService.getAll(page, size).getContent());
-	}
-
-	@GetMapping("/get/{id}")
-	public ResponseEntity<OrderDTO> get(@PathVariable Integer id)
-	{
-		return ResponseEntity.ok(orderService.get(id));
-	}
-
-	@PutMapping("/update")
-	public ResponseEntity<OrderDTO> update(@RequestBody OrderDTO entity)
-	{
-		return ResponseEntity.ok(orderService.update(entity));
-	}
-
-	@PutMapping("/create")
-	public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO entity)
-	{
-		return ResponseEntity.ok(orderService.create(entity));
-	}
-
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id)
-	{
-		orderService.delete(id);
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
+//	@GetMapping("/getAll")
+//	public ResponseEntity<List<OrderDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+//	{
+//		return ResponseEntity.ok(orderService.getAll(page, size).getContent());
+//	}
+//
+//	@GetMapping("/get/{id}")
+//	public ResponseEntity<OrderDTO> get(@PathVariable Integer id)
+//	{
+//		return ResponseEntity.ok(orderService.get(id));
+//	}
+//
+//	@PutMapping("/update")
+//	public ResponseEntity<OrderDTO> update(@RequestBody OrderDTO entity)
+//	{
+//		return ResponseEntity.ok(orderService.update(entity));
+//	}
+//
+//	@PutMapping("/create")
+//	public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO entity)
+//	{
+//		return ResponseEntity.ok(orderService.create(entity));
+//	}
+//
+//	@DeleteMapping("/delete/{id}")
+//	public ResponseEntity<Void> delete(@PathVariable Integer id)
+//	{
+//		orderService.delete(id);
+//		return ResponseEntity.status(HttpStatus.OK).build();
+//	}
 }

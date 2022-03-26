@@ -1,9 +1,11 @@
 package com.example.internetshop.services.client.impls;
 
-import com.example.internetshop.DTO.client.ClientDTO;
+import com.example.internetshop.DTO.client.req.ClientModify;
+import com.example.internetshop.DTO.client.resp.ClientDTO;
 import com.example.internetshop.model.Client;
 import com.example.internetshop.repositories.ClientRepository;
 import com.example.internetshop.services.client.services.IClientService;
+import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,65 +34,94 @@ public class ClientServiceImpl implements IClientService
 	{
 		Page<Client> clients = repository.findAll(PageRequest.of(page, size));
 
-		var clientDTOs = clients.get().map(this::convertToDTO).collect(Collectors.toList());
+		var clientsDTOs = clients.get().map(this::convertToDTO).collect(Collectors.toList());
 
-		return new PageImpl<ClientDTO>(clientDTOs);
+		return new PageImpl<ClientDTO>(clientsDTOs);
 	}
 
 	@Override
-	public ClientDTO get(Integer id)
+	public ClientDTO get(Integer id) throws Exception
 	{
-		return convertToDTO(repository.getById(id));
+		try
+		{
+			return convertToDTO(repository.getById(id));
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getExceptionString(Client.class, id));
+		}
 	}
 
 	@Override
-	public ClientDTO update(ClientDTO clientDTO)
+	public ClientDTO create(ClientModify entity) throws Exception
 	{
-		return convertToDTO(repository.save(DTO_ToEntity(clientDTO)));
+
+		try
+		{
+			return convertToDTO(repository.save(Client.builder()
+					.address(entity.getAddress())
+					.firstName(entity.getFirstName())
+					.lastName(entity.getLastName())
+					.middleName(entity.getMiddleName())
+					.phone(entity.getPhone())
+					.email(entity.getEmail())
+					.build())
+			);
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
+		}
 	}
 
 	@Override
-	public ClientDTO create(ClientDTO clientDTO)
+	public ClientDTO update(ClientModify entity) throws Exception
 	{
-		clientDTO.setId(null);
-		return convertToDTO(repository.save(DTO_ToEntity(clientDTO)));
+		try
+		{
+			Client client = repository.getById(entity.getId());
+
+			return convertToDTO(repository.save(Client.builder()
+					.id(client.getId())
+					.address(entity.getAddress())
+					.firstName(entity.getFirstName())
+					.lastName(entity.getLastName())
+					.middleName(entity.getMiddleName())
+					.phone(entity.getPhone())
+					.email(entity.getEmail())
+					.build())
+			);
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
+		}
 	}
 
 	@Override
-	public void delete(Integer id)
+	public void delete(Integer id) throws Exception
 	{
-		repository.delete(repository.getById(id));
+		try
+		{
+			repository.delete(repository.getById(id));
+		}
+		catch (Exception e)
+		{
+			throw new Exception(ElementExceptionStrings.getExceptionString(Client.class, id));
+		}
 	}
 
-	@Override
-	public Client getClient(Integer id)
-	{
-		return repository.getById(id);
-	}
-
-	private ClientDTO convertToDTO(Client client)
+	private ClientDTO convertToDTO(Client entity)
 	{
 		return ClientDTO.builder()
-				.id(client.getId())
-				.address(client.getAddress())
-				.email(client.getEmail())
-				.firstName(client.getFirstName())
-				.lastName(client.getLastName())
-				.middleName(client.getMiddleName())
-				.phone(client.getPhone())
+				.id(entity.getId())
+				.address(entity.getAddress())
+				.email(entity.getEmail())
+				.firstName(entity.getFirstName())
+				.lastName(entity.getLastName())
+				.middleName(entity.getMiddleName())
+				.phone(entity.getPhone())
 				.build();
 	}
 
-	private Client DTO_ToEntity(ClientDTO dto)
-	{
-		return Client.builder()
-				.id(dto.getId())
-				.address(dto.getAddress())
-				.email(dto.getEmail())
-				.firstName(dto.getFirstName())
-				.lastName(dto.getLastName())
-				.middleName(dto.getMiddleName())
-				.phone(dto.getPhone())
-				.build();
-	}
 }

@@ -1,6 +1,5 @@
 package com.example.internetshop.services.category.impls;
 
-import com.example.internetshop.DTO.category.CategoryDTO;
 import com.example.internetshop.repositories.CategoryRepository;
 import com.example.internetshop.services.category.services.ICategoryService;
 import lombok.RequiredArgsConstructor;
@@ -24,33 +23,5 @@ public class CategoryServiceImpl implements ICategoryService
 	private final CategoryRepository repository;
 
 
-	@Override
-	public Page<CategoryDTO> getAll(Integer page, Integer size)
-	{
-		return null;
-	}
 
-	@Override
-	public CategoryDTO get(Integer id)
-	{
-		return null;
-	}
-
-	@Override
-	public CategoryDTO update(CategoryDTO categoryDTO)
-	{
-		return null;
-	}
-
-	@Override
-	public CategoryDTO create(CategoryDTO categoryDTO)
-	{
-		return null;
-	}
-
-	@Override
-	public void delete(Integer id)
-	{
-
-	}
 }

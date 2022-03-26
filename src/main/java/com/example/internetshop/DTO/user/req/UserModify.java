@@ -1,4 +1,4 @@
-package com.example.internetshop.DTO.user;
+package com.example.internetshop.DTO.user.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,22 +7,20 @@ import lombok.NoArgsConstructor;
 
 /**
  * Created by IntelliJ IDEA.
- * InternetShop.UserDTO
+ * InternetShop.UserModify
  *
  * @Author: Palijchuk Nazar
- * @DateTime: 24.03.2022|23:09
- * @Version UserDTO: 1.0
+ * @DateTime: 26.03.2022|22:43
+ * @Version UserModify: 1.0
  */
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDTO
+@Builder
+public class UserModify
 {
 	private Integer id;
-	private String login;
+	private String username;
 	private String password;
-	private String firstName;
-	private String lastName;
 }

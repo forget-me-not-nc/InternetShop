@@ -1,11 +1,10 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.DTO.account.AccountCreateRequest;
-import com.example.internetshop.DTO.account.AccountDTO;
-import com.example.internetshop.DTO.account.AccountUpdateRequest;
+import com.example.internetshop.DTO.account.req.AccountCreate;
+import com.example.internetshop.DTO.account.req.AccountUpdate;
+import com.example.internetshop.DTO.account.resp.AccountDTO;
 import com.example.internetshop.services.account.services.IAccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +22,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
+@RequiredArgsConstructor
 public class AccountController
 {
-	private IAccountService accountService;
-
-	@Autowired
-	public void setAccountService(IAccountService accountService)
-	{
-		this.accountService = accountService;
-	}
+	private final IAccountService accountService;
 
 	@GetMapping("/getAll")
 	public ResponseEntity<List<AccountDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
@@ -40,38 +34,25 @@ public class AccountController
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<AccountDTO> get(@PathVariable Integer id)
+	public ResponseEntity<AccountDTO> get(@PathVariable Integer id) throws Exception
 	{
 		return ResponseEntity.ok(accountService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<AccountDTO> update(@RequestBody AccountUpdateRequest entity)
+	public ResponseEntity<AccountDTO> update(@RequestBody AccountUpdate entity) throws Exception
 	{
-		return ResponseEntity.ok(accountService.update(
-				AccountDTO.builder()
-						.id(entity.getId())
-						.isActive(entity.isActive())
-						.balance(entity.getBalance())
-						.build()
-		));
+		return ResponseEntity.ok(accountService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<AccountDTO> create(@RequestBody AccountCreateRequest entity)
+	public ResponseEntity<AccountDTO> create(@RequestBody AccountCreate entity) throws Exception
 	{
-		return ResponseEntity.ok(accountService.create(
-				AccountDTO.builder()
-						.userId(entity.getUserId())
-						.clientId(entity.getClientId())
-						.balance(entity.getBalance())
-						.isActive(entity.isActive())
-						.build()
-		));
+		return ResponseEntity.ok(accountService.create(entity));
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
 		accountService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();

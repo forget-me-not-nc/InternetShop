@@ -1,8 +1,7 @@
 package com.example.internetshop.services.client.services;
-
-import com.example.internetshop.DTO.client.ClientDTO;
-import com.example.internetshop.model.Client;
-import com.example.internetshop.services.IGenericService;
+import com.example.internetshop.DTO.client.req.ClientModify;
+import com.example.internetshop.DTO.client.resp.ClientDTO;
+import org.springframework.data.domain.Page;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +12,12 @@ import com.example.internetshop.services.IGenericService;
  * @Version IClientService: 1.0
  */
 
-public interface IClientService extends IGenericService<ClientDTO>
+public interface IClientService
 {
-	Client getClient(Integer id);
+	Page<ClientDTO> getAll(Integer page, Integer size);
+	ClientDTO get(Integer id) throws Exception;
+
+	ClientDTO create(ClientModify entity) throws Exception;
+	ClientDTO update(ClientModify entity) throws Exception;
+	void delete(Integer id) throws Exception;
 }

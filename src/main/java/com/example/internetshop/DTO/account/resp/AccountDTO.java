@@ -1,7 +1,9 @@
-package com.example.internetshop.DTO.account;
+package com.example.internetshop.DTO.account.resp;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -10,12 +12,14 @@ import java.math.BigDecimal;
  * InternetShop.AccountDTO
  *
  * @Author: Palijchuk Nazar
- * @DateTime: 24.03.2022|23:09
+ * @DateTime: 26.03.2022|22:07
  * @Version AccountDTO: 1.0
  */
 
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Builder
 public class AccountDTO
 {
 	private Integer id;

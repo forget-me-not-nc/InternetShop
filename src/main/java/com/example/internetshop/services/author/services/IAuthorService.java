@@ -1,8 +1,5 @@
 package com.example.internetshop.services.author.services;
 
-import com.example.internetshop.DTO.author.AuthorDTO;
-import com.example.internetshop.services.IGenericService;
-
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.IAuthorService
@@ -12,7 +9,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IAuthorService: 1.0
  */
 
-public interface IAuthorService extends IGenericService<AuthorDTO>
+public interface IAuthorService
 {
 
 }

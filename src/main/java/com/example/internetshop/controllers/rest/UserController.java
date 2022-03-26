@@ -1,7 +1,7 @@
 package com.example.internetshop.controllers.rest;
 
-import com.example.internetshop.DTO.user.SimplifiedUser;
-import com.example.internetshop.DTO.user.UserDTO;
+import com.example.internetshop.DTO.user.req.UserModify;
+import com.example.internetshop.DTO.user.resp.UserDTO;
 import com.example.internetshop.services.user.impls.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,27 +33,25 @@ public class UserController
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<UserDTO> get(@PathVariable Integer id)
+	public ResponseEntity<UserDTO> get(@PathVariable Integer id) throws Exception
 	{
 		return ResponseEntity.ok(userService.get(id));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<SimplifiedUser> update(@RequestBody UserDTO entity)
+	public ResponseEntity<UserDTO> update(@RequestBody UserModify entity) throws Exception
 	{
-		return ResponseEntity.ok(userService.simplifieUser(userService.update(entity)));
+		return ResponseEntity.ok(userService.update(entity));
 	}
 
 	@PutMapping("/create")
-	public ResponseEntity<SimplifiedUser> create(@RequestBody UserDTO entity,
-	                                             @RequestParam String firstName,
-	                                             @RequestParam String lastName)
+	public ResponseEntity<UserDTO> create(@RequestBody UserModify entity) throws Exception
 	{
-		return ResponseEntity.ok(userService.simplifieUser(userService.create(entity)));
+		return ResponseEntity.ok(userService.create(entity));
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
 		userService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).build();

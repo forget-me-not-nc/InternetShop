@@ -1,8 +1,5 @@
 package com.example.internetshop.services.order.services;
 
-import com.example.internetshop.DTO.order.OrderDTO;
-import com.example.internetshop.services.IGenericService;
-
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.IOrderService
@@ -12,7 +9,7 @@ import com.example.internetshop.services.IGenericService;
  * @Version IOrderService: 1.0
  */
 
-public interface IOrderService extends IGenericService<OrderDTO>
+public interface IOrderService
 {
 
 }

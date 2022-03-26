@@ -1,4 +1,4 @@
-package com.example.internetshop.DTO.client;
+package com.example.internetshop.DTO.client.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 
 /**
  * Created by IntelliJ IDEA.
- * InternetShop.ClientDTO
+ * InternetShop.ClientModify
  *
  * @Author: Palijchuk Nazar
- * @DateTime: 24.03.2022|23:10
- * @Version ClientDTO: 1.0
+ * @DateTime: 26.03.2022|22:44
+ * @Version ClientModify: 1.0
  */
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ClientDTO
+@Builder
+public class ClientModify
 {
 	private Integer id;
 	private String firstName;
