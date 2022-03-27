@@ -113,6 +113,12 @@ public class AccountServiceImpl implements IAccountService
 							.isActive(entity.isActive())
 							.id(account.getId())
 							.balance(entity.getBalance())
+							.client(Client.builder()
+									.id(account.getId())
+									.build())
+							.user(User.builder()
+									.id(account.getId())
+									.build())
 							.build()
 			));
 		}
@@ -129,15 +135,34 @@ public class AccountServiceImpl implements IAccountService
 		{
 			Account account = repository.getById(id);
 
+			Integer userId = account.getUser().getId();
+			Integer clientId = account.getClient().getId();
+
 			repository.delete(account);
 
-			userService.delete(account.getUser().getId());
-			clientService.delete(account.getClient().getId());
+			userService.delete(userId);
+			clientService.delete(clientId);
 		}
 		catch(Exception e)
 		{
 			throw new Exception(ElementExceptionStrings.getExceptionString(Account.class, id));
 		}
+	}
+
+	@Override
+	public Client findClientByUserId(Integer id)
+	{
+		Account account = repository.findByUserId(id);
+
+		return account == null ? null : account.getClient();
+	}
+
+	@Override
+	public User findUserByClientId(Integer id)
+	{
+		Account account = repository.findByClientId(id);
+
+		return account == null ? null : account.getUser();
 	}
 
 	private AccountDTO convertToDTO(Account entity)

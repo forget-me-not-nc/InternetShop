@@ -2,7 +2,12 @@ package com.example.internetshop.controllers.rest;
 
 import com.example.internetshop.DTO.client.req.ClientModify;
 import com.example.internetshop.DTO.client.resp.ClientDTO;
+import com.example.internetshop.model.Account;
+import com.example.internetshop.model.User;
+import com.example.internetshop.services.account.services.IAccountService;
 import com.example.internetshop.services.client.impls.ClientServiceImpl;
+import com.example.internetshop.services.client.services.IClientService;
+import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +29,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientController
 {
-	private final ClientServiceImpl clientService;
+	private final IClientService clientService;
+	private final IAccountService accountService;
+	private final IUserService userService;
 
 	@GetMapping("/getAll")
 	public ResponseEntity<List<ClientDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
@@ -53,7 +60,12 @@ public class ClientController
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
+		User user = accountService.findUserByClientId(id);
+
+		if (user != null) userService.delete(user.getId());
+
 		clientService.delete(id);
+
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 

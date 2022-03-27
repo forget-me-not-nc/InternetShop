@@ -3,6 +3,8 @@ package com.example.internetshop.services.account.services;
 import com.example.internetshop.DTO.account.req.AccountCreate;
 import com.example.internetshop.DTO.account.req.AccountUpdate;
 import com.example.internetshop.DTO.account.resp.AccountDTO;
+import com.example.internetshop.model.Client;
+import com.example.internetshop.model.User;
 import org.springframework.data.domain.Page;
 
 /**
@@ -22,5 +24,9 @@ public interface IAccountService
 	AccountDTO create(AccountCreate entity) throws Exception;
 	AccountDTO update(AccountUpdate entity) throws Exception;
 	void delete(Integer id) throws Exception;
+
+	Client findClientByUserId(Integer id);
+
+	User findUserByClientId(Integer id);
 
 }
