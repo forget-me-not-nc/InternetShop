@@ -28,4 +28,16 @@ public class AccountDTO
 
 	private Integer userId;
 	private Integer clientId;
+
+	@Override
+	public String toString()
+	{
+		return "Account {" +
+				"id=" + id +
+				", isActive=" + isActive +
+				", balance=" + balance +
+				", userId=" + userId +
+				", clientId=" + clientId +
+				'}';
+	}
 }

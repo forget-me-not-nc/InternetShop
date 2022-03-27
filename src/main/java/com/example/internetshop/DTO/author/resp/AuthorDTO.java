@@ -24,4 +24,15 @@ public class AuthorDTO
 	private String firstName;
 	private String lastName;
 	private String middleName;
+
+	@Override
+	public String toString()
+	{
+		return "AuthorDTO{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", middleName='" + middleName + '\'' +
+				'}';
+	}
 }

@@ -1,9 +1,8 @@
 package com.example.internetshop.DTO.category.resp;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,4 +21,13 @@ public class CategoryDTO
 {
 	private Integer id;
 	private String name;
+
+	@Override
+	public String toString()
+	{
+		return "CategoryDTO{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

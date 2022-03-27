@@ -1,7 +1,5 @@
 package com.example.internetshop.services.order.services;
 
-import com.example.internetshop.DTO.client.req.ClientModify;
-import com.example.internetshop.DTO.client.resp.ClientDTO;
 import com.example.internetshop.DTO.order.req.OrderCreate;
 import com.example.internetshop.DTO.order.req.OrderUpdate;
 import com.example.internetshop.DTO.order.resp.OrderDTO;

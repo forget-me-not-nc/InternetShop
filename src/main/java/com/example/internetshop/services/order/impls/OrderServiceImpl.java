@@ -4,7 +4,6 @@ import com.example.internetshop.DTO.order.req.OrderCreate;
 import com.example.internetshop.DTO.order.req.OrderUpdate;
 import com.example.internetshop.DTO.order.resp.OrderDTO;
 import com.example.internetshop.model.Account;
-import com.example.internetshop.model.Book;
 import com.example.internetshop.model.Order;
 import com.example.internetshop.repositories.OrderRepository;
 import com.example.internetshop.services.account.services.IAccountService;
@@ -13,12 +12,12 @@ import com.example.internetshop.services.order.services.IOrderService;
 import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Array;
-import org.jboss.jandex.PrimitiveType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -71,25 +70,23 @@ public class OrderServiceImpl implements IOrderService
 	{
 		try
 		{
-			Order order = Order.builder()
-					.id(10)
-					.totalSum(entity.getTotalSum())
-					.account(Account.builder()
-							.id(entity.getAccountId())
-							.build())
-					.address(entity.getAddress())
-					.orderDate(LocalDateTime.now())
-					//.books(bindOrderWithBooks(entity.getBooksId()))
-					.build();
-
 			return convertToDTO(
 					repository.save(
-							order
-					)
-			);
+							Order.builder()
+									.totalSum(entity.getTotalSum())
+									.account(Account.builder()
+											.id(entity.getAccountId())
+											.build())
+									.address(entity.getAddress())
+									.orderDate(LocalDateTime.now())
+									.books(bindOrderWithBooks(entity.getBooksId()))
+									.build()
+							)
+					);
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
 		}
 	}
@@ -104,18 +101,20 @@ public class OrderServiceImpl implements IOrderService
 			return convertToDTO(
 					repository.save(
 							Order.builder()
-									.id(entity.getId())
-									.totalSum(entity.getTotalSum())
-									.address(entity.getAddress())
-									.books(order.getBooks())
-									.account(order.getAccount())
-									.build()
+								.id(entity.getId())
+								.totalSum(entity.getTotalSum())
+								.address(entity.getAddress())
+								.orderDate(order.getOrderDate())
+								.books(order.getBooks())
+								.account(order.getAccount())
+								.build()
 					)
 			);
 		}
 		catch (Exception e)
 		{
-			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
+			e.printStackTrace();
+			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
 		}
 	}
 
@@ -144,9 +143,7 @@ public class OrderServiceImpl implements IOrderService
 				.totalSum(entity.getTotalSum())
 				.address(entity.getAddress())
 				.books(books)
-				.account(
-						accountService.convertToDTOString(entity.getAccount().getId())
-				)
+				.account(accountService.convertToDTOString(entity.getAccount().getId()))
 				.build();
 	}
 

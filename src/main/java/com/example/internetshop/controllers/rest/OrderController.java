@@ -3,7 +3,6 @@ package com.example.internetshop.controllers.rest;
 import com.example.internetshop.DTO.order.req.OrderCreate;
 import com.example.internetshop.DTO.order.req.OrderUpdate;
 import com.example.internetshop.DTO.order.resp.OrderDTO;
-import com.example.internetshop.services.order.impls.OrderServiceImpl;
 import com.example.internetshop.services.order.services.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

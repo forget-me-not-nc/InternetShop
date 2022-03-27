@@ -30,4 +30,16 @@ public class BookDTO
 	private Integer id;
 	private BigDecimal price;
 	private String name;
+
+	@Override
+	public String toString()
+	{
+		return "BookDTO{" +
+				"authors=" + authors +
+				", categories=" + categories +
+				", id=" + id +
+				", price=" + price +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

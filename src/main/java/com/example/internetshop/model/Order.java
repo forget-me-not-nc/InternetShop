@@ -1,16 +1,15 @@
 package com.example.internetshop.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,4 +41,21 @@ public class Order
 	@Column(columnDefinition = "int[]")
 	@Type(type = "com.example.internetshop.settings.CustomIntegerArrayType")
 	private Integer[] books;
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Order order = (Order) o;
+		return id.equals(order.id) && Objects.equals(orderDate, order.orderDate) && Objects.equals(totalSum, order.totalSum) && Objects.equals(address, order.address) && account.equals(order.account) && Arrays.equals(books, order.books);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int result = Objects.hash(id, orderDate, totalSum, address, account);
+		result = 31 * result + Arrays.hashCode(books);
+		return result;
+	}
 }

@@ -6,6 +6,7 @@ import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
 import java.sql.*;
+import java.util.Objects;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,13 +34,13 @@ public class CustomIntegerArrayType implements UserType
 	@Override
 	public boolean equals(Object x, Object y) throws HibernateException
 	{
-		return x.equals(y);
+		return Objects.equals(x, y);
 	}
 
 	@Override
 	public int hashCode(Object x) throws HibernateException
 	{
-		return 0;
+		return x != null ? x.hashCode() : 0;
 	}
 
 	@Override
@@ -68,30 +69,31 @@ public class CustomIntegerArrayType implements UserType
 	@Override
 	public Object deepCopy(Object value) throws HibernateException
 	{
-		return null;
+
+		return value;
 	}
 
 	@Override
 	public boolean isMutable()
 	{
-		return false;
+		return true;
 	}
 
 	@Override
 	public Serializable disassemble(Object value) throws HibernateException
 	{
-		return null;
+		return (Serializable) value;
 	}
 
 	@Override
 	public Object assemble(Serializable cached, Object owner) throws HibernateException
 	{
-		return null;
+		return cached;
 	}
 
 	@Override
 	public Object replace(Object original, Object target, Object owner) throws HibernateException
 	{
-		return null;
+		return this.deepCopy(original);
 	}
 }
