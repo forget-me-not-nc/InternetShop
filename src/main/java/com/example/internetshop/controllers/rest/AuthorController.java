@@ -2,7 +2,6 @@ package com.example.internetshop.controllers.rest;
 
 import com.example.internetshop.DTO.author.req.AuthorModify;
 import com.example.internetshop.DTO.author.resp.AuthorDTO;
-import com.example.internetshop.services.author.impls.AuthorServiceImpl;
 import com.example.internetshop.services.author.services.IAuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

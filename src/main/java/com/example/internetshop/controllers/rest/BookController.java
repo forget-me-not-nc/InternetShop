@@ -1,9 +1,15 @@
 package com.example.internetshop.controllers.rest;
 
+import com.example.internetshop.DTO.book.req.BookModify;
+import com.example.internetshop.DTO.book.resp.BookDTO;
 import com.example.internetshop.services.book.impls.BookServiceImpl;
+import com.example.internetshop.services.book.services.IBookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,36 +25,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class BookController
 {
-	private final BookServiceImpl bookService;
+	private final IBookService bookService;
 
-//	@GetMapping("/getAll")
-//	public ResponseEntity<List<BookDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-//	{
-//		return ResponseEntity.ok(bookService.getAll(page, size).getContent());
-//	}
-//
-//	@GetMapping("/get/{id}")
-//	public ResponseEntity<BookDTO> get(@PathVariable Integer id)
-//	{
-//		return ResponseEntity.ok(bookService.get(id));
-//	}
-//
-//	@PutMapping("/update")
-//	public ResponseEntity<BookDTO> update(@RequestBody BookDTO entity)
-//	{
-//		return ResponseEntity.ok(bookService.update(entity));
-//	}
-//
-//	@PutMapping("/create")
-//	public ResponseEntity<BookDTO> create(@RequestBody BookDTO entity)
-//	{
-//		return ResponseEntity.ok(bookService.create(entity));
-//	}
-//
-//	@DeleteMapping("/delete/{id}")
-//	public ResponseEntity<Void> delete(@PathVariable Integer id)
-//	{
-//		bookService.delete(id);
-//		return ResponseEntity.status(HttpStatus.OK).build();
-//	}
+	@GetMapping
+	public ResponseEntity<List<BookDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	{
+		return ResponseEntity.ok(bookService.getAll(page, size).getContent());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<BookDTO> get(@PathVariable Integer id) throws Exception
+	{
+		return ResponseEntity.ok(bookService.get(id));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<BookDTO> update(@PathVariable Integer id, @RequestBody BookModify entity) throws Exception
+	{
+		entity.setId(id);
+		return ResponseEntity.ok(bookService.update(entity));
+	}
+
+	@PutMapping
+	public ResponseEntity<BookDTO> create(@RequestBody BookModify entity) throws Exception
+	{
+		return ResponseEntity.ok(bookService.create(entity));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
+	{
+		bookService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

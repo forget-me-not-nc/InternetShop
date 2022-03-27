@@ -1,5 +1,12 @@
 package com.example.internetshop.services.book.services;
 
+import com.example.internetshop.DTO.book.req.BookModify;
+import com.example.internetshop.DTO.book.resp.BookDTO;
+import com.example.internetshop.DTO.user.req.UserModify;
+import com.example.internetshop.DTO.user.resp.UserDTO;
+import com.example.internetshop.model.Book;
+import org.springframework.data.domain.Page;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.IBookService
@@ -11,5 +18,17 @@ package com.example.internetshop.services.book.services;
 
 public interface IBookService
 {
+	Page<BookDTO> getAll(Integer page, Integer size);
 
+	BookDTO get(Integer id) throws Exception;
+
+	BookDTO create(BookModify entity) throws Exception;
+
+	BookDTO update(BookModify entity) throws Exception;
+
+	void delete(Integer id) throws Exception;
+
+	BookDTO convertToDTO(Book entity);
+
+	String convertToDTOString(Integer bookId);
 }

@@ -1,5 +1,12 @@
 package com.example.internetshop.services.order.services;
 
+import com.example.internetshop.DTO.client.req.ClientModify;
+import com.example.internetshop.DTO.client.resp.ClientDTO;
+import com.example.internetshop.DTO.order.req.OrderCreate;
+import com.example.internetshop.DTO.order.req.OrderUpdate;
+import com.example.internetshop.DTO.order.resp.OrderDTO;
+import org.springframework.data.domain.Page;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.IOrderService
@@ -11,5 +18,13 @@ package com.example.internetshop.services.order.services;
 
 public interface IOrderService
 {
+	Page<OrderDTO> getAll(Integer page, Integer size);
 
+	OrderDTO get(Integer id) throws Exception;
+
+	OrderDTO create(OrderCreate entity) throws Exception;
+
+	OrderDTO update(OrderUpdate entity) throws Exception;
+
+	void delete(Integer id) throws Exception;
 }

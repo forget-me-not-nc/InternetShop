@@ -107,7 +107,8 @@ public class AuthorServiceImpl implements IAuthorService
 		}
 	}
 
-	private AuthorDTO convertToDTO(Author entity)
+	@Override
+	public AuthorDTO convertToDTO(Author entity)
 	{
 		return AuthorDTO.builder()
 				.id(entity.getId())
@@ -116,4 +117,32 @@ public class AuthorServiceImpl implements IAuthorService
 				.middleName(entity.getMiddleName())
 				.build();
 	}
+
+	@Override
+	public AuthorDTO convertToDTO(Integer authorId)
+	{
+		Author author = repository.getById(authorId);
+
+		return AuthorDTO.builder()
+				.middleName(author.getMiddleName())
+				.lastName(author.getLastName())
+				.firstName(author.getFirstName())
+				.id(authorId)
+				.build();
+	}
+
+	//	@Override
+//	public boolean authorExist(Integer authorId) throws Exception
+//	{
+//		try
+//		{
+//			repository.getById(authorId);
+//
+//			return true;
+//		}
+//		catch (Exception e)
+//		{
+//			return false;
+//		}
+//	}
 }

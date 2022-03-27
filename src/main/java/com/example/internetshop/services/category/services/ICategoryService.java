@@ -1,8 +1,7 @@
 package com.example.internetshop.services.category.services;
 
-import com.example.internetshop.DTO.author.req.AuthorModify;
-import com.example.internetshop.DTO.author.resp.AuthorDTO;
 import com.example.internetshop.DTO.category.resp.CategoryDTO;
+import com.example.internetshop.model.Category;
 import org.springframework.data.domain.Page;
 
 /**
@@ -25,4 +24,7 @@ public interface ICategoryService
 	CategoryDTO update(CategoryDTO entity) throws Exception;
 
 	void delete(Integer id) throws Exception;
+
+	CategoryDTO convertToDTO(Category entity);
+	CategoryDTO convertToDTO(Integer categoryId);
 }

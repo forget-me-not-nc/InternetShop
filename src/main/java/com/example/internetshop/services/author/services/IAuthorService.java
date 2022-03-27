@@ -2,6 +2,7 @@ package com.example.internetshop.services.author.services;
 
 import com.example.internetshop.DTO.author.req.AuthorModify;
 import com.example.internetshop.DTO.author.resp.AuthorDTO;
+import com.example.internetshop.model.Author;
 import org.springframework.data.domain.Page;
 
 /**
@@ -25,4 +26,7 @@ public interface IAuthorService
 
 	void delete(Integer id) throws Exception;
 
+	AuthorDTO convertToDTO(Author entity);
+
+	AuthorDTO convertToDTO(Integer authorId);
 }

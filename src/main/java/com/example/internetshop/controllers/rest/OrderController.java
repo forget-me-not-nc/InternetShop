@@ -1,9 +1,16 @@
 package com.example.internetshop.controllers.rest;
 
+import com.example.internetshop.DTO.order.req.OrderCreate;
+import com.example.internetshop.DTO.order.req.OrderUpdate;
+import com.example.internetshop.DTO.order.resp.OrderDTO;
 import com.example.internetshop.services.order.impls.OrderServiceImpl;
+import com.example.internetshop.services.order.services.IOrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,36 +26,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OrderController
 {
-	private final OrderServiceImpl orderService;
+	private final IOrderService orderService;
 
-//	@GetMapping("/getAll")
-//	public ResponseEntity<List<OrderDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-//	{
-//		return ResponseEntity.ok(orderService.getAll(page, size).getContent());
-//	}
-//
-//	@GetMapping("/get/{id}")
-//	public ResponseEntity<OrderDTO> get(@PathVariable Integer id)
-//	{
-//		return ResponseEntity.ok(orderService.get(id));
-//	}
-//
-//	@PutMapping("/update")
-//	public ResponseEntity<OrderDTO> update(@RequestBody OrderDTO entity)
-//	{
-//		return ResponseEntity.ok(orderService.update(entity));
-//	}
-//
-//	@PutMapping("/create")
-//	public ResponseEntity<OrderDTO> create(@RequestBody OrderDTO entity)
-//	{
-//		return ResponseEntity.ok(orderService.create(entity));
-//	}
-//
-//	@DeleteMapping("/delete/{id}")
-//	public ResponseEntity<Void> delete(@PathVariable Integer id)
-//	{
-//		orderService.delete(id);
-//		return ResponseEntity.status(HttpStatus.OK).build();
-//	}
+	@GetMapping
+	public ResponseEntity<List<OrderDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	{
+		return ResponseEntity.ok(orderService.getAll(page, size).getContent());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<OrderDTO> get(@PathVariable Integer id) throws Exception
+	{
+		return ResponseEntity.ok(orderService.get(id));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<OrderDTO> update(@PathVariable Integer id, @RequestBody OrderUpdate entity) throws Exception
+	{
+		entity.setId(id);
+		return ResponseEntity.ok(orderService.update(entity));
+	}
+
+	@PutMapping
+	public ResponseEntity<OrderDTO> create(@RequestBody OrderCreate entity) throws Exception
+	{
+		return ResponseEntity.ok(orderService.create(entity));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
+	{
+		orderService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

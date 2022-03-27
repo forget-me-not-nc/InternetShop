@@ -32,4 +32,5 @@ public interface IAccountService
 
 	User findUserByClientId(Integer id);
 
+	String convertToDTOString(Integer accountId);
 }

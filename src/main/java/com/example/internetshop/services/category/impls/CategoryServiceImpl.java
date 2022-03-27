@@ -1,8 +1,6 @@
 package com.example.internetshop.services.category.impls;
 
-import com.example.internetshop.DTO.account.resp.AccountDTO;
 import com.example.internetshop.DTO.category.resp.CategoryDTO;
-import com.example.internetshop.model.Account;
 import com.example.internetshop.model.Category;
 import com.example.internetshop.repositories.CategoryRepository;
 import com.example.internetshop.services.category.services.ICategoryService;
@@ -101,11 +99,23 @@ public class CategoryServiceImpl implements ICategoryService
 		}
 	}
 
-	private CategoryDTO convertToDTO(Category entity)
+	@Override
+	public CategoryDTO convertToDTO(Category entity)
 	{
 		return CategoryDTO.builder()
 				.id(entity.getId())
 				.name(entity.getName())
+				.build();
+	}
+
+	@Override
+	public CategoryDTO convertToDTO(Integer categoryId)
+	{
+		Category category = repository.getById(categoryId);
+
+		return CategoryDTO.builder()
+				.name(category.getName())
+				.id(categoryId)
 				.build();
 	}
 }

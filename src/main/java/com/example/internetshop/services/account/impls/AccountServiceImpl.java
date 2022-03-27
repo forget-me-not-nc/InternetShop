@@ -164,6 +164,21 @@ public class AccountServiceImpl implements IAccountService
 		return account == null ? null : account.getUser();
 	}
 
+	@Override
+	public String convertToDTOString(Integer accountId)
+	{
+		try
+		{
+			Account account = repository.getById(accountId);
+
+			return convertToDTO(account).toString();
+		}
+		catch (Exception e)
+		{
+			return "-DELETED ACCOUNT-";
+		}
+	}
+
 	private AccountDTO convertToDTO(Account entity)
 	{
 		return AccountDTO.builder()

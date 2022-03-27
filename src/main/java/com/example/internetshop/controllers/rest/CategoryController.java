@@ -1,7 +1,6 @@
 package com.example.internetshop.controllers.rest;
 
 import com.example.internetshop.DTO.category.resp.CategoryDTO;
-import com.example.internetshop.services.category.impls.CategoryServiceImpl;
 import com.example.internetshop.services.category.services.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
