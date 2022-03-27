@@ -19,10 +19,13 @@ import org.springframework.data.domain.Page;
 public interface IAccountService
 {
 	Page<AccountDTO> getAll(Integer page, Integer size);
+
 	AccountDTO get(Integer id) throws Exception;
 
 	AccountDTO create(AccountCreate entity) throws Exception;
+
 	AccountDTO update(AccountUpdate entity) throws Exception;
+
 	void delete(Integer id) throws Exception;
 
 	Client findClientByUserId(Integer id);

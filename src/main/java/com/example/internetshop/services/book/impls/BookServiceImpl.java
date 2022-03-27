@@ -3,7 +3,6 @@ package com.example.internetshop.services.book.impls;
 import com.example.internetshop.repositories.BookRepository;
 import com.example.internetshop.services.book.services.IBookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**

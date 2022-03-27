@@ -1,9 +1,7 @@
 package com.example.internetshop.services.user.impls;
 
-import com.example.internetshop.DTO.client.resp.ClientDTO;
 import com.example.internetshop.DTO.user.req.UserModify;
 import com.example.internetshop.DTO.user.resp.UserDTO;
-import com.example.internetshop.model.Client;
 import com.example.internetshop.model.User;
 import com.example.internetshop.repositories.UserRepository;
 import com.example.internetshop.services.user.services.IUserService;

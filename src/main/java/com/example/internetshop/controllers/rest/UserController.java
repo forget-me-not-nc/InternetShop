@@ -5,7 +5,6 @@ import com.example.internetshop.DTO.user.resp.UserDTO;
 import com.example.internetshop.model.Client;
 import com.example.internetshop.services.account.services.IAccountService;
 import com.example.internetshop.services.client.services.IClientService;
-import com.example.internetshop.services.user.impls.UserServiceImpl;
 import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,31 +31,32 @@ public class UserController
 	private final IAccountService accountService;
 	private final IClientService clientService;
 
-	@GetMapping("/getAll")
+	@GetMapping()
 	public ResponseEntity<List<UserDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(userService.getAll(page, size).getContent());
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<UserDTO> get(@PathVariable Integer id) throws Exception
 	{
 		return ResponseEntity.ok(userService.get(id));
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<UserDTO> update(@RequestBody UserModify entity) throws Exception
+	@PutMapping("/{id}")
+	public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserModify entity) throws Exception
 	{
+		entity.setId(id);
 		return ResponseEntity.ok(userService.update(entity));
 	}
 
-	@PutMapping("/create")
+	@PutMapping()
 	public ResponseEntity<UserDTO> create(@RequestBody UserModify entity) throws Exception
 	{
 		return ResponseEntity.ok(userService.create(entity));
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
 		Client client = accountService.findClientByUserId(id);

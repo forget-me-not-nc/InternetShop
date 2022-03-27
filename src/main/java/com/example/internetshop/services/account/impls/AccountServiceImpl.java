@@ -55,11 +55,10 @@ public class AccountServiceImpl implements IAccountService
 		{
 			return convertToDTO(repository.getById(id));
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new Exception(ElementExceptionStrings.getExceptionString(Account.class, id));
 		}
-
 	}
 
 	@Override
@@ -114,10 +113,10 @@ public class AccountServiceImpl implements IAccountService
 							.id(account.getId())
 							.balance(entity.getBalance())
 							.client(Client.builder()
-									.id(account.getId())
+									.id(account.getClient().getId())
 									.build())
 							.user(User.builder()
-									.id(account.getId())
+									.id(account.getUser().getId())
 									.build())
 							.build()
 			));
@@ -143,7 +142,7 @@ public class AccountServiceImpl implements IAccountService
 			userService.delete(userId);
 			clientService.delete(clientId);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			throw new Exception(ElementExceptionStrings.getExceptionString(Account.class, id));
 		}

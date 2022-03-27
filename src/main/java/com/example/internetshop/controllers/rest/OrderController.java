@@ -2,11 +2,8 @@ package com.example.internetshop.controllers.rest;
 
 import com.example.internetshop.services.order.impls.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by IntelliJ IDEA.

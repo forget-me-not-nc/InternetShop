@@ -27,31 +27,32 @@ public class AccountController
 {
 	private final IAccountService accountService;
 
-	@GetMapping("/getAll")
+	@GetMapping
 	public ResponseEntity<List<AccountDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(accountService.getAll(page, size).getContent());
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<AccountDTO> get(@PathVariable Integer id) throws Exception
 	{
 		return ResponseEntity.ok(accountService.get(id));
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<AccountDTO> update(@RequestBody AccountUpdate entity) throws Exception
+	@PutMapping("/{id}")
+	public ResponseEntity<AccountDTO> update(@PathVariable Integer id, @RequestBody AccountUpdate entity) throws Exception
 	{
+		entity.setId(id);
 		return ResponseEntity.ok(accountService.update(entity));
 	}
 
-	@PutMapping("/create")
+	@PutMapping
 	public ResponseEntity<AccountDTO> create(@RequestBody AccountCreate entity) throws Exception
 	{
 		return ResponseEntity.ok(accountService.create(entity));
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
 		accountService.delete(id);

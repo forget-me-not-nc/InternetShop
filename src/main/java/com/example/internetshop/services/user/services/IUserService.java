@@ -1,7 +1,5 @@
 package com.example.internetshop.services.user.services;
 
-import com.example.internetshop.DTO.client.req.ClientModify;
-import com.example.internetshop.DTO.client.resp.ClientDTO;
 import com.example.internetshop.DTO.user.req.UserModify;
 import com.example.internetshop.DTO.user.resp.UserDTO;
 import org.springframework.data.domain.Page;
@@ -18,9 +16,12 @@ import org.springframework.data.domain.Page;
 public interface IUserService
 {
 	Page<UserDTO> getAll(Integer page, Integer size);
+
 	UserDTO get(Integer id) throws Exception;
 
 	UserDTO create(UserModify entity) throws Exception;
+
 	UserDTO update(UserModify entity) throws Exception;
+
 	void delete(Integer id) throws Exception;
 }

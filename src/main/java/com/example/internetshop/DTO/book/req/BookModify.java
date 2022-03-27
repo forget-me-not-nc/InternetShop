@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.BookModify
@@ -20,5 +23,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookModify
 {
-
+	List<Integer> authors;
+	List<Integer> categories;
+	private Integer id;
+	private BigDecimal price;
+	private String name;
+	private String publishingHouse;
 }

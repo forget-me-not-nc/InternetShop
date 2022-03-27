@@ -1,11 +1,14 @@
 package com.example.internetshop.DTO.book.resp;
 
+import com.example.internetshop.DTO.author.resp.AuthorDTO;
+import com.example.internetshop.DTO.category.resp.CategoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,9 +25,9 @@ import java.math.BigDecimal;
 @Builder
 public class BookDTO
 {
+	List<AuthorDTO> authors;
+	List<CategoryDTO> categories;
 	private Integer id;
 	private BigDecimal price;
 	private String name;
-
-
 }

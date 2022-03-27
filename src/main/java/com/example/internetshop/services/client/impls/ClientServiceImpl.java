@@ -103,8 +103,6 @@ public class ClientServiceImpl implements IClientService
 	{
 		try
 		{
-			Client client = repository.getById(id);
-
 			repository.delete(repository.getById(id));
 		}
 		catch (Exception e)

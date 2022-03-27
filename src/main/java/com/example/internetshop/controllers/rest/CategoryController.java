@@ -1,6 +1,8 @@
 package com.example.internetshop.controllers.rest;
 
+import com.example.internetshop.DTO.category.resp.CategoryDTO;
 import com.example.internetshop.services.category.impls.CategoryServiceImpl;
+import com.example.internetshop.services.category.services.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,36 +24,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController
 {
-	private final CategoryServiceImpl categoryService;
+	private final ICategoryService categoryService;
 
-//	@GetMapping("/getAll")
-//	public ResponseEntity<List<CategoryDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-//	{
-//		return ResponseEntity.ok(categoryService.getAll(page, size).getContent());
-//	}
-//
-//	@GetMapping("/get/{id}")
-//	public ResponseEntity<CategoryDTO> get(@PathVariable Integer id)
-//	{
-//		return ResponseEntity.ok(categoryService.get(id));
-//	}
-//
-//	@PutMapping("/update")
-//	public ResponseEntity<CategoryDTO> update(@RequestBody CategoryDTO entity)
-//	{
-//		return ResponseEntity.ok(categoryService.update(entity));
-//	}
-//
-//	@PutMapping("/create")
-//	public ResponseEntity<CategoryDTO> create(@RequestBody CategoryDTO entity)
-//	{
-//		return ResponseEntity.ok(categoryService.create(entity));
-//	}
-//
-//	@DeleteMapping("/delete/{id}")
-//	public ResponseEntity<Void> delete(@PathVariable Integer id)
-//	{
-//		categoryService.delete(id);
-//		return ResponseEntity.status(HttpStatus.OK).build();
-//	}
+	@GetMapping
+	public ResponseEntity<List<CategoryDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
+	{
+		return ResponseEntity.ok(categoryService.getAll(page, size).getContent());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<CategoryDTO> get(@PathVariable Integer id) throws Exception
+	{
+		return ResponseEntity.ok(categoryService.get(id));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO entity) throws Exception
+	{
+		entity.setId(id);
+		return ResponseEntity.ok(categoryService.update(entity));
+	}
+
+	@PutMapping
+	public ResponseEntity<CategoryDTO> create(@RequestBody CategoryDTO entity) throws Exception
+	{
+		return ResponseEntity.ok(categoryService.create(entity));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
+	{
+		categoryService.delete(id);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

@@ -3,7 +3,6 @@ package com.example.internetshop.services.order.impls;
 import com.example.internetshop.repositories.OrderRepository;
 import com.example.internetshop.services.order.services.IOrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,7 +20,6 @@ public class OrderServiceImpl implements IOrderService
 {
 
 	private final OrderRepository repository;
-
 
 
 }

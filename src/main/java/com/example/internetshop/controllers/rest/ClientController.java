@@ -2,10 +2,8 @@ package com.example.internetshop.controllers.rest;
 
 import com.example.internetshop.DTO.client.req.ClientModify;
 import com.example.internetshop.DTO.client.resp.ClientDTO;
-import com.example.internetshop.model.Account;
 import com.example.internetshop.model.User;
 import com.example.internetshop.services.account.services.IAccountService;
-import com.example.internetshop.services.client.impls.ClientServiceImpl;
 import com.example.internetshop.services.client.services.IClientService;
 import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -33,31 +31,31 @@ public class ClientController
 	private final IAccountService accountService;
 	private final IUserService userService;
 
-	@GetMapping("/getAll")
+	@GetMapping()
 	public ResponseEntity<List<ClientDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
 	{
 		return ResponseEntity.ok(clientService.getAll(page, size).getContent());
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ClientDTO> get(@PathVariable Integer id) throws Exception
 	{
 		return ResponseEntity.ok(clientService.get(id));
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<ClientDTO> update(@RequestBody ClientModify entity) throws Exception
+	@PutMapping("/{id}")
+	public ResponseEntity<ClientDTO> update(@PathVariable Integer id, @RequestBody ClientModify entity) throws Exception
 	{
 		return ResponseEntity.ok(clientService.update(entity));
 	}
 
-	@PutMapping("/create")
+	@PutMapping()
 	public ResponseEntity<ClientDTO> create(@RequestBody ClientModify entity) throws Exception
 	{
 		return ResponseEntity.ok(clientService.create(entity));
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
 	{
 		User user = accountService.findUserByClientId(id);
