@@ -18,11 +18,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class AuthorModify
-{
-	private Integer id;
-	private String firstName;
-	private String lastName;
-	private String middleName;
-	private String info;
+public class AuthorModify {
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String info;
 }

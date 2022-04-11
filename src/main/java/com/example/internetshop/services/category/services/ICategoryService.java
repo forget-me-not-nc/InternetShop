@@ -4,6 +4,8 @@ import com.example.internetshop.DTO.category.resp.CategoryDTO;
 import com.example.internetshop.model.Category;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * InternetShop.ICategoryService
@@ -13,18 +15,20 @@ import org.springframework.data.domain.Page;
  * @Version ICategoryService: 1.0
  */
 
-public interface ICategoryService
-{
-	Page<CategoryDTO> getAll(Integer page, Integer size);
+public interface ICategoryService {
+    Page<CategoryDTO> getAll(Integer page, Integer size);
 
-	CategoryDTO get(Integer id) throws Exception;
+    CategoryDTO get(Integer id);
 
-	CategoryDTO create(CategoryDTO entity) throws Exception;
+    CategoryDTO create(CategoryDTO entity);
 
-	CategoryDTO update(CategoryDTO entity) throws Exception;
+    CategoryDTO update(CategoryDTO entity);
 
-	void delete(Integer id) throws Exception;
+    void delete(Integer id);
 
-	CategoryDTO convertToDTO(Category entity);
-	CategoryDTO convertToDTO(Integer categoryId);
+    CategoryDTO convertToDTO(Category entity);
+
+    CategoryDTO convertToDTO(Integer categoryId);
+
+    List<String> getCategoriesNamesByBookId(Integer bookId);
 }

@@ -21,18 +21,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Client
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String firstName;
-	private String lastName;
-	private String middleName;
-	private String address;
-	private String phone;
-	private String email;
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String address;
+    private String phone;
+    private String email;
 
-	@OneToOne(mappedBy = "client")
-	private Account account;
+    @OneToOne(mappedBy = "client")
+    private Account account;
 }

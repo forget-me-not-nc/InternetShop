@@ -23,17 +23,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Author
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String firstName;
-	private String lastName;
-	private String middleName;
-	private String info;
+public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String info;
 
-	@ManyToMany(mappedBy = "authors")
-	private List<Book> books;
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books;
 
 }

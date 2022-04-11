@@ -20,9 +20,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 @Builder
-public class AccountUpdate
-{
-	private Integer id;
-	private boolean isActive;
-	private BigDecimal balance;
+public class AccountUpdate {
+    private Integer id;
+    private boolean isActive;
+    private BigDecimal balance;
 }

@@ -18,8 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserDTO
-{
-	private Integer id;
-	private String username;
+public class UserDTO {
+    private Integer id;
+    private String username;
 }

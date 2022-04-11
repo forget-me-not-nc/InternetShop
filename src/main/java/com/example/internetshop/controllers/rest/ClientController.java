@@ -25,46 +25,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
-public class ClientController
-{
-	private final IClientService clientService;
-	private final IAccountService accountService;
-	private final IUserService userService;
+public class ClientController {
+    private final IClientService clientService;
+    private final IAccountService accountService;
+    private final IUserService userService;
 
-	@GetMapping()
-	public ResponseEntity<List<ClientDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-	{
-		return ResponseEntity.ok(clientService.getAll(page, size).getContent());
-	}
+    @GetMapping()
+    public ResponseEntity<List<ClientDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(clientService.getAll(page, size).getContent());
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ClientDTO> get(@PathVariable Integer id) throws Exception
-	{
-		return ResponseEntity.ok(clientService.get(id));
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientDTO> get(@PathVariable Integer id) {
+        return ResponseEntity.ok(clientService.get(id));
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ClientDTO> update(@PathVariable Integer id, @RequestBody ClientModify entity) throws Exception
-	{
-		return ResponseEntity.ok(clientService.update(entity));
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> update(@PathVariable Integer id, @RequestBody ClientModify entity) {
+        return ResponseEntity.ok(clientService.update(entity));
+    }
 
-	@PutMapping()
-	public ResponseEntity<ClientDTO> create(@RequestBody ClientModify entity) throws Exception
-	{
-		return ResponseEntity.ok(clientService.create(entity));
-	}
+    @PutMapping()
+    public ResponseEntity<ClientDTO> create(@RequestBody ClientModify entity) {
+        return ResponseEntity.ok(clientService.create(entity));
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
-	{
-		User user = accountService.findUserByClientId(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        User user = accountService.findUserByClientId(id);
 
-		if (user != null) userService.delete(user.getId());
+        if (user != null) userService.delete(user.getId());
 
-		clientService.delete(id);
+        clientService.delete(id);
 
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

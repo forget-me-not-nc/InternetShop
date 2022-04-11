@@ -23,28 +23,27 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Book
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private BigDecimal price;
-	private String name;
-	private String publishingHouse;
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private BigDecimal price;
+    private String name;
+    private String publishingHouse;
 
-	@ManyToMany
-	@JoinTable(
-			name = "bookHasAuthor",
-			joinColumns = @JoinColumn(name = "book_id"),
-			inverseJoinColumns = @JoinColumn(name = "author_id")
-	)
-	private List<Author> authors;
+    @ManyToMany
+    @JoinTable(
+            name = "bookHasAuthor",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors;
 
-	@ManyToMany
-	@JoinTable(
-			name = "bookHasCategory",
-			joinColumns = @JoinColumn(name = "book_id"),
-			inverseJoinColumns = @JoinColumn(name = "category_id")
-	)
-	private List<Category> categories;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "bookHasCategory",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 }

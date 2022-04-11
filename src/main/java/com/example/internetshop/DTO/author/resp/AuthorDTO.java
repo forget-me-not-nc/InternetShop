@@ -18,21 +18,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class AuthorDTO
-{
-	private Integer id;
-	private String firstName;
-	private String lastName;
-	private String middleName;
+public class AuthorDTO {
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private String middleName;
 
-	@Override
-	public String toString()
-	{
-		return "AuthorDTO{" +
-				"id=" + id +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", middleName='" + middleName + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "AuthorDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                '}';
+    }
 }

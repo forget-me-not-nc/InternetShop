@@ -21,12 +21,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class BookModify
-{
-	List<Integer> authors;
-	List<Integer> categories;
-	private Integer id;
-	private BigDecimal price;
-	private String name;
-	private String publishingHouse;
+public class BookModify {
+    List<Integer> authors;
+    List<Integer> categories;
+    private Integer id;
+    private BigDecimal price;
+    private String name;
+    private String publishingHouse;
 }

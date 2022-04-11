@@ -5,7 +5,6 @@ import com.example.internetshop.DTO.user.resp.UserDTO;
 import com.example.internetshop.model.User;
 import com.example.internetshop.repositories.UserRepository;
 import com.example.internetshop.services.user.services.IUserService;
-import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,88 +24,53 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements IUserService
-{
-	private final UserRepository repository;
+public class UserServiceImpl implements IUserService {
+    private final UserRepository repository;
 
-	@Override
-	public Page<UserDTO> getAll(Integer page, Integer size)
-	{
-		Page<User> users = repository.findAll(PageRequest.of(page, size));
+    @Override
+    public Page<UserDTO> getAll(Integer page, Integer size) {
+        Page<User> users = repository.findAll(PageRequest.of(page, size));
 
-		var usersDTOs = users.get().map(this::convertToDTO).collect(Collectors.toList());
+        var usersDTOs = users.get().map(this::convertToDTO).collect(Collectors.toList());
 
-		return new PageImpl<UserDTO>(usersDTOs);
-	}
+        return new PageImpl<UserDTO>(usersDTOs);
+    }
 
-	@Override
-	public UserDTO get(Integer id) throws Exception
-	{
-		try
-		{
-			return convertToDTO(repository.getById(id));
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getExceptionString(User.class, id));
-		}
-	}
+    @Override
+    public UserDTO get(Integer id) {
+            return convertToDTO(repository.getById(id));
+    }
 
-	@Override
-	public UserDTO create(UserModify entity) throws Exception
-	{
-		try
-		{
-			return convertToDTO(repository.save(User.builder()
-					.login(entity.getUsername())
-					.password(entity.getPassword())
-					.build())
-			);
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
-		}
-	}
+    @Override
+    public UserDTO create(UserModify entity) {
 
-	@Override
-	public UserDTO update(UserModify entity) throws Exception
-	{
-		try
-		{
-			User user = repository.getById(entity.getId());
+        return convertToDTO(repository.save(User.builder()
+                .username(entity.getUsername())
+                .password(entity.getPassword())
+                .build())
+        );
+    }
 
-			return convertToDTO(repository.save(User.builder()
-					.id(user.getId())
-					.login(entity.getUsername())
-					.password(entity.getPassword())
-					.build())
-			);
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
-		}
-	}
+    @Override
+    public UserDTO update(UserModify entity){
 
-	@Override
-	public void delete(Integer id) throws Exception
-	{
-		try
-		{
-			repository.delete(repository.getById(id));
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getExceptionString(User.class, id));
-		}
-	}
+        return convertToDTO(repository.save(User.builder()
+                .id(entity.getId())
+                .username(entity.getUsername())
+                .password(entity.getPassword())
+                .build())
+        );
+    }
 
-	private UserDTO convertToDTO(User entity)
-	{
-		return UserDTO.builder()
-				.id(entity.getId())
-				.username(entity.getLogin())
-				.build();
-	}
+    @Override
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
+
+    private UserDTO convertToDTO(User entity) {
+        return UserDTO.builder()
+                .id(entity.getId())
+                .username(entity.getUsername())
+                .build();
+    }
 }

@@ -18,9 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserModify
-{
-	private Integer id;
-	private String username;
-	private String password;
+public class UserModify {
+    private Integer id;
+    private String username;
+    private String password;
 }

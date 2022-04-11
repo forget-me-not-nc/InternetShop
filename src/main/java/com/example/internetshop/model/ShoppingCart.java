@@ -22,8 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ShoppingCart
-{
-	private List<Book> selectedBooks;
-	private BigDecimal currentSum;
+public class ShoppingCart {
+    private List<Book> selectedBooks;
+    private BigDecimal currentSum;
 }

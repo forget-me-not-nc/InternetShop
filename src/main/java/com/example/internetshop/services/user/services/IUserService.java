@@ -13,15 +13,14 @@ import org.springframework.data.domain.Page;
  * @Version IUserService: 1.0
  */
 
-public interface IUserService
-{
-	Page<UserDTO> getAll(Integer page, Integer size);
+public interface IUserService {
+    Page<UserDTO> getAll(Integer page, Integer size);
 
-	UserDTO get(Integer id) throws Exception;
+    UserDTO get(Integer id);
 
-	UserDTO create(UserModify entity) throws Exception;
+    UserDTO create(UserModify entity);
 
-	UserDTO update(UserModify entity) throws Exception;
+    UserDTO update(UserModify entity);
 
-	void delete(Integer id) throws Exception;
+    void delete(Integer id);
 }

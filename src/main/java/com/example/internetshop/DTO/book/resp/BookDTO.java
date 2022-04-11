@@ -23,23 +23,21 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class BookDTO
-{
-	List<AuthorDTO> authors;
-	List<CategoryDTO> categories;
-	private Integer id;
-	private BigDecimal price;
-	private String name;
+public class BookDTO {
+    List<AuthorDTO> authors;
+    List<CategoryDTO> categories;
+    private Integer id;
+    private BigDecimal price;
+    private String name;
 
-	@Override
-	public String toString()
-	{
-		return "BookDTO{" +
-				"authors=" + authors +
-				", categories=" + categories +
-				", id=" + id +
-				", price=" + price +
-				", name='" + name + '\'' +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "BookDTO{" +
+                "authors=" + authors +
+                ", categories=" + categories +
+                ", id=" + id +
+                ", price=" + price +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

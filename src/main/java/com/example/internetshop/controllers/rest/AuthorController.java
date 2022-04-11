@@ -22,40 +22,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/authors")
 @RequiredArgsConstructor
-public class AuthorController
-{
-	private final IAuthorService authorService;
+public class AuthorController {
+    private final IAuthorService authorService;
 
-	@GetMapping()
-	public ResponseEntity<List<AuthorDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-	{
-		return ResponseEntity.ok(authorService.getAll(page, size).getContent());
-	}
+    @GetMapping()
+    public ResponseEntity<List<AuthorDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(authorService.getAll(page, size).getContent());
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<AuthorDTO> get(@PathVariable Integer id) throws Exception
-	{
-		return ResponseEntity.ok(authorService.get(id));
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthorDTO> get(@PathVariable Integer id) {
+        return ResponseEntity.ok(authorService.get(id));
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<AuthorDTO> update(@PathVariable Integer id, @RequestBody AuthorModify entity) throws Exception
-	{
-		entity.setId(id);
-		return ResponseEntity.ok(authorService.update(entity));
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<AuthorDTO> update(@PathVariable Integer id, @RequestBody AuthorModify entity) {
+        entity.setId(id);
+        return ResponseEntity.ok(authorService.update(entity));
+    }
 
-	@PutMapping
-	public ResponseEntity<AuthorDTO> create(@RequestBody AuthorModify entity) throws Exception
-	{
-		return ResponseEntity.ok(authorService.create(entity));
-	}
+    @PutMapping
+    public ResponseEntity<AuthorDTO> create(@RequestBody AuthorModify entity) {
+        return ResponseEntity.ok(authorService.create(entity));
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
-	{
-		authorService.delete(id);
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        authorService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

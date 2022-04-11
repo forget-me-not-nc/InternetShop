@@ -18,13 +18,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class ClientDTO
-{
-	private Integer id;
-	private String firstName;
-	private String lastName;
-	private String middleName;
-	private String address;
-	private String phone;
-	private String email;
+public class ClientDTO {
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String address;
+    private String phone;
+    private String email;
 }

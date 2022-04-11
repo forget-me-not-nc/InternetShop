@@ -21,16 +21,15 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 @Builder
-public class AccountCreate
-{
-	private boolean isActive;
-	private BigDecimal balance;
+public class AccountCreate {
+    private boolean isActive;
+    private BigDecimal balance;
 
-	private String login;
-	private String password;
+    private String login;
+    private String password;
 
-	private String firstName;
-	private String lastName;
-	private String phone;
-	private String email;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String email;
 }

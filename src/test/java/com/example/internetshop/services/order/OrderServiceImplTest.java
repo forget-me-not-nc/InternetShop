@@ -1,0 +1,146 @@
+package com.example.internetshop.services.order;
+
+import com.example.internetshop.model.Client;
+import com.example.internetshop.model.Order;
+import com.example.internetshop.repositories.*;
+import com.example.internetshop.services.account.impls.AccountServiceImpl;
+import com.example.internetshop.services.author.impls.AuthorServiceImpl;
+import com.example.internetshop.services.book.impls.BookServiceImpl;
+import com.example.internetshop.services.category.impls.CategoryServiceImpl;
+import com.example.internetshop.services.client.impls.ClientServiceImpl;
+import com.example.internetshop.services.order.impls.OrderServiceImpl;
+import com.example.internetshop.services.user.impls.UserServiceImpl;
+import com.example.internetshop.stubs.AccountStub;
+import com.example.internetshop.stubs.CategoryStub;
+import com.example.internetshop.stubs.ClientStub;
+import com.example.internetshop.stubs.OrderStub;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class OrderServiceImplTest {
+
+    private OrderServiceImpl orderService;
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @Mock
+    private BookServiceImpl bookService;
+
+    @Mock
+    private AccountServiceImpl accountService;
+
+    @BeforeEach
+    void setup()
+    {
+        orderService = new OrderServiceImpl(orderRepository, bookService, accountService);
+    }
+
+    @Test
+    void successfulGetAll() {
+        var expect = OrderStub.generateOrdersList();
+
+        when(orderRepository.findAll(PageRequest.of(OrderStub.page, OrderStub.size)))
+                .thenReturn(new PageImpl<Order>(expect));
+
+        when(accountService.convertToDTOString(any())).thenReturn("Account");
+
+        var result = orderService.getAll(0,2);
+
+        assertAll(() ->{
+            assertEquals(2L, result.getTotalElements());
+
+            var res1 = result.getContent().get(0);
+            var res2 = result.getContent().get(1);
+
+            assertEquals(res1.getId(), expect.get(0).getId());
+            assertEquals(res1.getAddress(), expect.get(0).getAddress());
+            assertEquals(res1.getAccount(), accountService.convertToDTOString(expect.get(0).getAccount().getId()));
+            assertEquals(res1.getOrderDate(), expect.get(0).getOrderDate());
+            assertEquals(res1.getTotalSum(), expect.get(0).getTotalSum());
+            assertEquals(res1.getBooks().size(), expect.get(0).getBooks().length);
+
+            assertEquals(res2.getId(), expect.get(1).getId());
+            assertEquals(res2.getAddress(), expect.get(1).getAddress());
+            assertEquals(res2.getAccount(), accountService.convertToDTOString(expect.get(1).getAccount().getId()));
+            assertEquals(res2.getOrderDate(), expect.get(1).getOrderDate());
+            assertEquals(res2.getTotalSum(), expect.get(1).getTotalSum());
+            assertEquals(res2.getBooks().size(), expect.get(1).getBooks().length);
+        });
+    }
+
+    @Test
+    void successfulGet() {
+        var expect = OrderStub.generateOrder();
+
+        when(orderRepository.getById(anyInt())).thenReturn(expect);
+        when(accountService.convertToDTOString(any())).thenReturn("Account");
+
+        var result = orderService.get(OrderStub.ID);
+
+        assertAll(() ->{
+            assertEquals(expect.getId(), result.getId());
+            assertEquals(expect.getAddress(), result.getAddress());
+            assertEquals(accountService.convertToDTOString(expect.getAccount().getId()), result.getAccount());
+            assertEquals(expect.getOrderDate(), result.getOrderDate());
+            assertEquals(expect.getTotalSum(), result.getTotalSum());
+            assertEquals(expect.getBooks().length, result.getBooks().size());
+        });
+    }
+
+    @Test
+    void successfulCreate() {
+        var expect = OrderStub.generateOrder();
+
+        when(orderRepository.save(any())).thenReturn(expect);
+        when(accountService.convertToDTOString(any())).thenReturn("Account");
+
+        var result = orderService.create(OrderStub.generateOrderCreateRequest());
+
+        assertAll(() ->{
+            assertEquals(expect.getId(), result.getId());
+            assertEquals(expect.getAddress(), result.getAddress());
+            assertEquals(accountService.convertToDTOString(expect.getAccount().getId()), result.getAccount());
+            assertEquals(expect.getOrderDate(), result.getOrderDate());
+            assertEquals(expect.getTotalSum(), result.getTotalSum());
+            assertEquals(expect.getBooks().length, result.getBooks().size());
+        });
+    }
+
+    @Test
+    void successfulUpdate() {
+        var expect = OrderStub.generateOrder();
+
+        when(orderRepository.getById(any())).thenReturn(expect);
+        when(orderRepository.save(any())).thenReturn(expect);
+
+        var result = orderService.update(OrderStub.generateOrderUpdateRequest());
+
+        assertAll(() ->{
+            assertEquals(expect.getId(), result.getId());
+            assertEquals(expect.getAddress(), result.getAddress());
+            assertEquals(expect.getTotalSum(), result.getTotalSum());
+        });
+    }
+
+    @Test
+    void successfulDelete() {
+        var deleteCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        orderService.delete(OrderStub.ID);
+        verify(orderRepository, atLeast(1)).deleteById(deleteCaptor.capture());
+        assertEquals(CategoryStub.ID, deleteCaptor.getValue());
+    }
+}

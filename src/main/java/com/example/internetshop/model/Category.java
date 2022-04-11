@@ -23,13 +23,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Category
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String name;
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
 
-	@ManyToMany(mappedBy = "categories")
-	private List<Book> books;
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private List<Book> books;
 }

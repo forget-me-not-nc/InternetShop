@@ -23,40 +23,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
-public class AccountController
-{
-	private final IAccountService accountService;
+public class AccountController {
+    private final IAccountService accountService;
 
-	@GetMapping
-	public ResponseEntity<List<AccountDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-	{
-		return ResponseEntity.ok(accountService.getAll(page, size).getContent());
-	}
+    @GetMapping
+    public ResponseEntity<List<AccountDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(accountService.getAll(page, size).getContent());
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<AccountDTO> get(@PathVariable Integer id) throws Exception
-	{
-		return ResponseEntity.ok(accountService.get(id));
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountDTO> get(@PathVariable Integer id) throws Exception {
+        return ResponseEntity.ok(accountService.get(id));
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<AccountDTO> update(@PathVariable Integer id, @RequestBody AccountUpdate entity) throws Exception
-	{
-		entity.setId(id);
-		return ResponseEntity.ok(accountService.update(entity));
-	}
+    @PutMapping("/{id}")
+    public ResponseEntity<AccountDTO> update(@PathVariable Integer id, @RequestBody AccountUpdate entity) throws Exception {
+        entity.setId(id);
+        return ResponseEntity.ok(accountService.update(entity));
+    }
 
-	@PutMapping
-	public ResponseEntity<AccountDTO> create(@RequestBody AccountCreate entity) throws Exception
-	{
-		return ResponseEntity.ok(accountService.create(entity));
-	}
+    @PutMapping
+    public ResponseEntity<AccountDTO> create(@RequestBody AccountCreate entity) throws Exception {
+        return ResponseEntity.ok(accountService.create(entity));
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
-	{
-		accountService.delete(id);
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
+        accountService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

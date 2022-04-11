@@ -1,16 +1,21 @@
 package com.example.internetshop.controllers.rest;
 
+import com.example.internetshop.DTO.security.req.LoginRequest;
+import com.example.internetshop.DTO.security.req.SignUpRequest;
 import com.example.internetshop.DTO.user.req.UserModify;
 import com.example.internetshop.DTO.user.resp.UserDTO;
 import com.example.internetshop.model.Client;
 import com.example.internetshop.services.account.services.IAccountService;
 import com.example.internetshop.services.client.services.IClientService;
+import com.example.internetshop.services.security.AuthService;
 import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -25,47 +30,53 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController
-{
-	private final IUserService userService;
-	private final IAccountService accountService;
-	private final IClientService clientService;
+public class UserController {
+    private final IUserService userService;
+    private final IAccountService accountService;
+    private final IClientService clientService;
+    private final AuthService service;
 
-	@GetMapping()
-	public ResponseEntity<List<UserDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size)
-	{
-		return ResponseEntity.ok(userService.getAll(page, size).getContent());
-	}
+    @PostMapping("/token")
+    public ResponseEntity<?> authenticate(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(service.authenticateRequest(request));
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<UserDTO> get(@PathVariable Integer id) throws Exception
-	{
-		return ResponseEntity.ok(userService.get(id));
-	}
+    @PostMapping("/signUp")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> createUser(@Valid @RequestBody SignUpRequest request) {
+        return ResponseEntity.ok(service.signUpUser(request));
+    }
 
-	@PutMapping("/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserModify entity) throws Exception
-	{
-		entity.setId(id);
-		return ResponseEntity.ok(userService.update(entity));
-	}
+    @GetMapping()
+    public ResponseEntity<List<UserDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(userService.getAll(page, size).getContent());
+    }
 
-	@PutMapping()
-	public ResponseEntity<UserDTO> create(@RequestBody UserModify entity) throws Exception
-	{
-		return ResponseEntity.ok(userService.create(entity));
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> get(@PathVariable Integer id) {
+        return ResponseEntity.ok(userService.get(id));
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception
-	{
-		Client client = accountService.findClientByUserId(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserModify entity) {
+        entity.setId(id);
+        return ResponseEntity.ok(userService.update(entity));
+    }
 
-		if (client != null) clientService.delete(client.getId());
+    @PutMapping()
+    public ResponseEntity<UserDTO> create(@RequestBody UserModify entity) {
+        return ResponseEntity.ok(userService.create(entity));
+    }
 
-		userService.delete(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Client client = accountService.findClientByUserId(id);
 
-		return ResponseEntity.status(HttpStatus.OK).build();
-	}
+        if (client != null) clientService.delete(client.getId());
+
+        userService.delete(id);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 }

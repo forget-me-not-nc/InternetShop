@@ -20,24 +20,22 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Data
 @Builder
-public class AccountDTO
-{
-	private Integer id;
-	private boolean isActive;
-	private BigDecimal balance;
+public class AccountDTO {
+    private Integer id;
+    private boolean isActive;
+    private BigDecimal balance;
 
-	private Integer userId;
-	private Integer clientId;
+    private Integer userId;
+    private Integer clientId;
 
-	@Override
-	public String toString()
-	{
-		return "Account {" +
-				"id=" + id +
-				", isActive=" + isActive +
-				", balance=" + balance +
-				", userId=" + userId +
-				", clientId=" + clientId +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Account {" +
+                "id=" + id +
+                ", isActive=" + isActive +
+                ", balance=" + balance +
+                ", userId=" + userId +
+                ", clientId=" + clientId +
+                '}';
+    }
 }

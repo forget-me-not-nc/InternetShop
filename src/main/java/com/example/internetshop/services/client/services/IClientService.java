@@ -13,15 +13,14 @@ import org.springframework.data.domain.Page;
  * @Version IClientService: 1.0
  */
 
-public interface IClientService
-{
-	Page<ClientDTO> getAll(Integer page, Integer size);
+public interface IClientService {
+    Page<ClientDTO> getAll(Integer page, Integer size);
 
-	ClientDTO get(Integer id) throws Exception;
+    ClientDTO get(Integer id);
 
-	ClientDTO create(ClientModify entity) throws Exception;
+    ClientDTO create(ClientModify entity);
 
-	ClientDTO update(ClientModify entity) throws Exception;
+    ClientDTO update(ClientModify entity);
 
-	void delete(Integer id) throws Exception;
+    void delete(Integer id);
 }

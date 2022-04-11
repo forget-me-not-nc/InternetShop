@@ -16,21 +16,20 @@ import org.springframework.data.domain.Page;
  * @Version IAccountService: 1.0
  */
 
-public interface IAccountService
-{
-	Page<AccountDTO> getAll(Integer page, Integer size);
+public interface IAccountService {
+    Page<AccountDTO> getAll(Integer page, Integer size);
 
-	AccountDTO get(Integer id) throws Exception;
+    AccountDTO get(Integer id);
 
-	AccountDTO create(AccountCreate entity) throws Exception;
+    AccountDTO create(AccountCreate entity);
 
-	AccountDTO update(AccountUpdate entity) throws Exception;
+    AccountDTO update(AccountUpdate entity);
 
-	void delete(Integer id) throws Exception;
+    void delete(Integer id);
 
-	Client findClientByUserId(Integer id);
+    Client findClientByUserId(Integer id);
 
-	User findUserByClientId(Integer id);
+    User findUserByClientId(Integer id);
 
-	String convertToDTOString(Integer accountId);
+    String convertToDTOString(Integer accountId);
 }

@@ -9,18 +9,13 @@ import com.example.internetshop.repositories.OrderRepository;
 import com.example.internetshop.services.account.services.IAccountService;
 import com.example.internetshop.services.book.services.IBookService;
 import com.example.internetshop.services.order.services.IOrderService;
-import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.mapping.Array;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,134 +31,94 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements IOrderService
-{
-	private final OrderRepository repository;
-	private final IBookService bookService;
-	private final IAccountService accountService;
+public class OrderServiceImpl implements IOrderService {
+    private final OrderRepository repository;
+    private final IBookService bookService;
+    private final IAccountService accountService;
 
-	@Override
-	public Page<OrderDTO> getAll(Integer page, Integer size)
-	{
-		Page<Order> orders = repository.findAll(PageRequest.of(page, size));
+    @Override
+    public Page<OrderDTO> getAll(Integer page, Integer size) {
+        Page<Order> orders = repository.findAll(PageRequest.of(page, size));
 
-		var ordersDTOs = orders.get().map(this::convertToDTO).collect(Collectors.toList());
+        var ordersDTOs = orders.get().map(this::convertToDTO).collect(Collectors.toList());
 
-		return new PageImpl<OrderDTO>(ordersDTOs);
-	}
+        return new PageImpl<OrderDTO>(ordersDTOs);
+    }
 
-	@Override
-	public OrderDTO get(Integer id) throws Exception
-	{
-		try
-		{
-			return convertToDTO(repository.getById(id));
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getExceptionString(Order.class, id));
-		}
-	}
+    @Override
+    public OrderDTO get(Integer id) {
+        return convertToDTO(repository.getById(id));
+    }
 
-	@Override
-	public OrderDTO create(OrderCreate entity) throws Exception
-	{
-		try
-		{
-			return convertToDTO(
-					repository.save(
-							Order.builder()
-									.totalSum(entity.getTotalSum())
-									.account(Account.builder()
-											.id(entity.getAccountId())
-											.build())
-									.address(entity.getAddress())
-									.orderDate(LocalDateTime.now())
-									.books(bindOrderWithBooks(entity.getBooksId()))
-									.build()
-							)
-					);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
-		}
-	}
+    @Override
+    public OrderDTO create(OrderCreate entity) {
 
-	@Override
-	public OrderDTO update(OrderUpdate entity) throws Exception
-	{
-		try
-		{
-			Order order = repository.getById(entity.getId());
+        return convertToDTO(
+                repository.save(
+                        Order.builder()
+                                .totalSum(entity.getTotalSum())
+                                .account(Account.builder()
+                                        .id(entity.getAccountId())
+                                        .build())
+                                .address(entity.getAddress())
+                                .orderDate(LocalDateTime.now())
+                                .books(bindOrderWithBooks(entity.getBooksId()))
+                                .build()
+                )
+        );
+    }
 
-			return convertToDTO(
-					repository.save(
-							Order.builder()
-								.id(entity.getId())
-								.totalSum(entity.getTotalSum())
-								.address(entity.getAddress())
-								.orderDate(order.getOrderDate())
-								.books(order.getBooks())
-								.account(order.getAccount())
-								.build()
-					)
-			);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
-		}
-	}
+    @Override
+    public OrderDTO update(OrderUpdate entity) {
+        Order order = repository.getById(entity.getId());
 
-	@Override
-	public void delete(Integer id) throws Exception
-	{
-		try
-		{
-			repository.delete(repository.getById(id));
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getExceptionString(Order.class, id));
-		}
-	}
+        return convertToDTO(
+                repository.save(
+                        Order.builder()
+                                .id(entity.getId())
+                                .totalSum(entity.getTotalSum())
+                                .address(entity.getAddress())
+                                .orderDate(order.getOrderDate())
+                                .books(order.getBooks())
+                                .account(order.getAccount())
+                                .build()
+                )
+        );
+    }
 
-	private OrderDTO convertToDTO(Order entity)
-	{
-		List<String> books = Arrays.stream(entity.getBooks())
-				.map(bookService::convertToDTOString)
-				.collect(Collectors.toList());
+    @Override
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
 
-		return OrderDTO.builder()
-				.id(entity.getId())
-				.orderDate(entity.getOrderDate())
-				.totalSum(entity.getTotalSum())
-				.address(entity.getAddress())
-				.books(books)
-				.account(accountService.convertToDTOString(entity.getAccount().getId()))
-				.build();
-	}
+    private OrderDTO convertToDTO(Order entity) {
+        List<String> books = Arrays.stream(entity.getBooks())
+                .map(bookService::convertToDTOString)
+                .collect(Collectors.toList());
 
-	private Integer[] bindOrderWithBooks(List<Integer> booksIds)
-	{
-		return booksIds.stream()
-				.filter(
-						item ->
-						{
-							try
-							{
-								bookService.get(item);
+        return OrderDTO.builder()
+                .id(entity.getId())
+                .orderDate(entity.getOrderDate())
+                .totalSum(entity.getTotalSum())
+                .address(entity.getAddress())
+                .books(books)
+                .account(accountService.convertToDTOString(entity.getAccount().getId()))
+                .build();
+    }
 
-								return true;
-							}
-							catch (Exception e)
-							{
-								return false;
-							}
-						}
-				).toArray(Integer[]::new);
-	}
+    private Integer[] bindOrderWithBooks(List<Integer> booksIds) {
+        return booksIds.stream()
+                .filter(
+                        item ->
+                        {
+                            try {
+                                bookService.get(item);
+
+                                return true;
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        }
+                ).toArray(Integer[]::new);
+    }
 }

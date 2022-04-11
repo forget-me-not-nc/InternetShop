@@ -14,19 +14,18 @@ import org.springframework.data.domain.Page;
  * @Version IAuthorService: 1.0
  */
 
-public interface IAuthorService
-{
-	Page<AuthorDTO> getAll(Integer page, Integer size);
+public interface IAuthorService {
+    Page<AuthorDTO> getAll(Integer page, Integer size);
 
-	AuthorDTO get(Integer id) throws Exception;
+    AuthorDTO get(Integer id);
 
-	AuthorDTO create(AuthorModify entity) throws Exception;
+    AuthorDTO create(AuthorModify entity);
 
-	AuthorDTO update(AuthorModify entity) throws Exception;
+    AuthorDTO update(AuthorModify entity);
 
-	void delete(Integer id) throws Exception;
+    void delete(Integer id);
 
-	AuthorDTO convertToDTO(Author entity);
+    AuthorDTO convertToDTO(Author entity);
 
-	AuthorDTO convertToDTO(Integer authorId);
+    AuthorDTO convertToDTO(Integer authorId);
 }

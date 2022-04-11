@@ -14,15 +14,14 @@ import org.springframework.data.domain.Page;
  * @Version IOrderService: 1.0
  */
 
-public interface IOrderService
-{
-	Page<OrderDTO> getAll(Integer page, Integer size);
+public interface IOrderService {
+    Page<OrderDTO> getAll(Integer page, Integer size);
 
-	OrderDTO get(Integer id) throws Exception;
+    OrderDTO get(Integer id);
 
-	OrderDTO create(OrderCreate entity) throws Exception;
+    OrderDTO create(OrderCreate entity);
 
-	OrderDTO update(OrderUpdate entity) throws Exception;
+    OrderDTO update(OrderUpdate entity);
 
-	void delete(Integer id) throws Exception;
+    void delete(Integer id);
 }

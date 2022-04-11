@@ -11,14 +11,12 @@ import com.example.internetshop.repositories.BookRepository;
 import com.example.internetshop.services.author.services.IAuthorService;
 import com.example.internetshop.services.book.services.IBookService;
 import com.example.internetshop.services.category.services.ICategoryService;
-import com.example.internetshop.settings.ElementExceptionStrings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,183 +31,139 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BookServiceImpl implements IBookService
-{
-	private final BookRepository repository;
-	private final IAuthorService authorService;
-	private final ICategoryService categoryService;
+public class BookServiceImpl implements IBookService {
+    private final BookRepository repository;
+    private final IAuthorService authorService;
+    private final ICategoryService categoryService;
 
-	@Override
-	public Page<BookDTO> getAll(Integer page, Integer size)
-	{
-		Page<Book> books = repository.findAll(PageRequest.of(page, size));
+    @Override
+    public Page<BookDTO> getAll(Integer page, Integer size) {
+        Page<Book> books = repository.findAll(PageRequest.of(page, size));
 
-		var booksDTOs = books.get().map(this::convertToDTO).collect(Collectors.toList());
+        var booksDTOs = books.get().map(this::convertToDTO).collect(Collectors.toList());
 
-		return new PageImpl<BookDTO>(booksDTOs);
-	}
+        return new PageImpl<BookDTO>(booksDTOs);
+    }
 
-	@Override
-	public BookDTO get(Integer id) throws Exception
-	{
-		try
-		{
-			return convertToDTO(repository.getById(id));
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getExceptionString(Book.class, id));
-		}
-	}
+    @Override
+    public BookDTO get(Integer id) {
+        return convertToDTO(repository.getById(id));
+    }
 
-	@Override
-	public BookDTO create(BookModify entity) throws Exception
-	{
-		try
-		{
-			return convertToDTO(repository.save(
-					Book.builder()
-							.authors(bindBookWithAuthors(entity.getAuthors()))
-							.categories(bindBookWithCategories(entity.getCategories()))
-							.price(entity.getPrice())
-							.name(entity.getName())
-							.publishingHouse(entity.getPublishingHouse())
-							.build()
-					)
-			);
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getCreateExceptionString(entity));
-		}
-	}
+    @Override
+    public BookDTO create(BookModify entity) {
+        return convertToDTO(repository.save(
+                Book.builder()
+                        .authors(bindBookWithAuthors(entity.getAuthors()))
+                        .categories(bindBookWithCategories(entity.getCategories()))
+                        .price(entity.getPrice())
+                        .name(entity.getName())
+                        .publishingHouse(entity.getPublishingHouse())
+                        .build()
+                )
+        );
+    }
 
-	@Override
-	public BookDTO update(BookModify entity) throws Exception
-	{
-		try
-		{
-			return convertToDTO(repository.save(
-					Book.builder()
-							.id(entity.getId())
-							.authors(bindBookWithAuthors(entity.getAuthors()))
-							.categories(bindBookWithCategories(entity.getCategories()))
-							.price(entity.getPrice())
-							.name(entity.getName())
-							.publishingHouse(entity.getPublishingHouse())
-							.build()
-					)
-			);
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getUpdateExceptionString(entity));
-		}
-	}
+    @Override
+    public BookDTO update(BookModify entity) {
+        return convertToDTO(repository.save(
+                Book.builder()
+                        .id(entity.getId())
+                        .authors(bindBookWithAuthors(entity.getAuthors()))
+                        .categories(bindBookWithCategories(entity.getCategories()))
+                        .price(entity.getPrice())
+                        .name(entity.getName())
+                        .publishingHouse(entity.getPublishingHouse())
+                        .build()
+                )
+        );
+    }
 
-	@Override
-	public void delete(Integer id) throws Exception
-	{
-		try
-		{
-			repository.delete(repository.getById(id));
-		}
-		catch (Exception e)
-		{
-			throw new Exception(ElementExceptionStrings.getExceptionString(Book.class, id));
-		}
-	}
+    @Override
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
 
-	@Override
-	public BookDTO convertToDTO(Book entity)
-	{
-		return BookDTO.builder()
-				.id(entity.getId())
-				.name(entity.getName())
-				.price(entity.getPrice())
-				.authors(getBookAuthorDTOs(entity.getAuthors()))
-				.categories(getBookCategoryDTOs(entity.getCategories()))
-				.build();
-	}
+    @Override
+    public BookDTO convertToDTO(Book entity) {
+        return BookDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .price(entity.getPrice())
+                .authors(getBookAuthorDTOs(entity.getAuthors()))
+                .categories(getBookCategoryDTOs(entity.getCategories()))
+                .build();
+    }
 
-	@Override
-	public String convertToDTOString(Integer bookId)
-	{
-		try
-		{
-			Book book = repository.getById(bookId);
+    @Override
+    public String convertToDTOString(Integer bookId) {
+        try {
+            Book book = repository.getById(bookId);
 
-			return convertToDTO(book).toString();
-		}
-		catch (Exception e)
-		{
-			return "-DELETED BOOK-";
-		}
-	}
+            return convertToDTO(book).toString();
+        } catch (Exception e) {
+            return "-DELETED BOOK-";
+        }
+    }
 
-	private List<AuthorDTO> getBookAuthorDTOs(List<Author> authors)
-	{
-		return authors.stream().map(
-				item -> authorService.convertToDTO(item.getId())
-		).collect(Collectors.toList());
-	}
+    public List<AuthorDTO> getBookAuthorDTOs(List<Author> authors) {
+        return authors.stream().map(
+                item -> authorService.convertToDTO(item.getId())
+        ).collect(Collectors.toList());
+    }
 
-	private List<CategoryDTO> getBookCategoryDTOs(List<Category> categories)
-	{
-		return categories.stream().map(
-				item -> categoryService.convertToDTO(item.getId())
-		).collect(Collectors.toList());
-	}
+    public List<CategoryDTO> getBookCategoryDTOs(List<Category> categories) {
+        return categories.stream().map(
+                item -> categoryService.convertToDTO(item.getId())
+        ).collect(Collectors.toList());
+    }
 
-	private List<Author> bindBookWithAuthors(List<Integer> authorIds)
-	{
-		return authorIds.stream()
-				.filter(
-						item -> {
-							try
-							{
-								authorService.get(item);
+    public List<Author> bindBookWithAuthors(List<Integer> authorIds) {
+        return authorIds.stream()
+                .filter(
+                        item -> {
+                            try {
+                                authorService.get(item);
 
-								return true;
-							}
-							catch (Exception e)
-							{
-								return false;
-							}
-						}
-				)
-				.map(
-					item -> Author.builder()
-							.id(item)
-							.build()
-				)
-				.collect(Collectors.toList());
-	}
+                                return true;
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        }
+                )
+                .map(
+                        item -> Author.builder()
+                                .id(item)
+                                .build()
+                )
+                .collect(Collectors.toList());
+    }
 
-	private List<Category> bindBookWithCategories(List<Integer> categoryIds)
-	{
-		return categoryIds.stream()
-				.filter(
-						item -> {
-							try
-							{
-								categoryService.get(item);
+    public List<Category> bindBookWithCategories(List<Integer> categoryIds) {
+        return categoryIds.stream()
+                .filter(
+                        item -> {
+                            try {
+                                categoryService.get(item);
 
-								return true;
-							}
-							catch (Exception e)
-							{
-								return false;
-							}
-						}
-				)
-				.map(
-					item -> {
-						return Category.builder()
-								.id(item)
-								.build();
-						}
-				)
-				.collect(Collectors.toList());
-	}
+                                return true;
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        }
+                )
+                .map(
+                        item -> {
+                            return Category.builder()
+                                    .id(item)
+                                    .build();
+                        }
+                )
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getCategoriesNamesByBookId(Integer bookId) {
+        return categoryService.getCategoriesNamesByBookId(bookId);
+    }
 }

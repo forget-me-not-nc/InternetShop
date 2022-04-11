@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,9 +20,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Builder
-public class OrderUpdate
-{
-	private Integer id;
-	private BigDecimal totalSum;
-	private String address;
+public class OrderUpdate {
+    private Integer id;
+    private BigDecimal totalSum;
+    private String address;
 }
