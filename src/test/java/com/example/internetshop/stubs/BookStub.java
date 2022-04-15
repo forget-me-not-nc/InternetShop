@@ -3,8 +3,6 @@ package com.example.internetshop.stubs;
 import com.example.internetshop.DTO.book.req.BookModify;
 import com.example.internetshop.DTO.book.resp.BookDTO;
 import com.example.internetshop.model.Book;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

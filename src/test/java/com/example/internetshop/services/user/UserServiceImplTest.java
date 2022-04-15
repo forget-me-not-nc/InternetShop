@@ -13,7 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -27,8 +28,7 @@ class UserServiceImplTest {
     private UserRepository repository;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         service = new UserServiceImpl(repository);
     }
 
@@ -39,9 +39,9 @@ class UserServiceImplTest {
         when(repository.findAll(PageRequest.of(UserStub.page, UserStub.size)))
                 .thenReturn(new PageImpl<User>(expect));
 
-        var result = service.getAll(0,2);
+        var result = service.getAll(0, 2);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(2L, result.getTotalElements());
 
             var res1 = result.getContent().get(0);
@@ -63,7 +63,7 @@ class UserServiceImplTest {
 
         var result = service.get(UserStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getUsername(), result.getUsername());
         });
@@ -77,7 +77,7 @@ class UserServiceImplTest {
 
         var result = service.create(UserStub.generateUserModify());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(result.getId(), expect.getId());
             assertEquals(result.getUsername(), expect.getUsername());
         });
@@ -91,7 +91,7 @@ class UserServiceImplTest {
 
         var result = service.update(UserStub.generateUserModify());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(result.getId(), expect.getId());
             assertEquals(result.getUsername(), expect.getUsername());
         });

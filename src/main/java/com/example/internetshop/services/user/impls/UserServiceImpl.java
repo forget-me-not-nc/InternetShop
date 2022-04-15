@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDTO get(Integer id) {
-            return convertToDTO(repository.getById(id));
+        return convertToDTO(repository.getById(id));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserDTO update(UserModify entity){
+    public UserDTO update(UserModify entity) {
 
         return convertToDTO(repository.save(User.builder()
                 .id(entity.getId())

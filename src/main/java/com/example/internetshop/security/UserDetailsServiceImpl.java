@@ -1,4 +1,4 @@
-package com.example.internetshop.services.security;
+package com.example.internetshop.security;
 
 import com.example.internetshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

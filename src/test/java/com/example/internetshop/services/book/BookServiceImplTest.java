@@ -1,13 +1,11 @@
 package com.example.internetshop.services.book;
 
-import com.example.internetshop.model.Account;
-import com.example.internetshop.model.Author;
 import com.example.internetshop.model.Book;
 import com.example.internetshop.repositories.BookRepository;
 import com.example.internetshop.services.author.impls.AuthorServiceImpl;
 import com.example.internetshop.services.book.impls.BookServiceImpl;
 import com.example.internetshop.services.category.impls.CategoryServiceImpl;
-import com.example.internetshop.stubs.*;
+import com.example.internetshop.stubs.BookStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +15,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +48,7 @@ class BookServiceImplTest {
 
         var result = service.getAll(BookStub.page, BookStub.size);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(2L, result.getTotalElements());
 
             var res1 = result.getContent().get(0);
@@ -79,7 +76,7 @@ class BookServiceImplTest {
 
         var result = service.get(BookStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAuthors().size(), result.getAuthors().size());
             assertEquals(expect.getCategories().size(), result.getCategories().size());
@@ -96,7 +93,7 @@ class BookServiceImplTest {
 
         var result = service.create(BookStub.generateBookModifyRequest());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAuthors().size(), result.getAuthors().size());
             assertEquals(expect.getCategories().size(), result.getCategories().size());
@@ -113,7 +110,7 @@ class BookServiceImplTest {
 
         var result = service.update(BookStub.generateBookModifyRequest());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAuthors().size(), result.getAuthors().size());
             assertEquals(expect.getCategories().size(), result.getCategories().size());
@@ -138,7 +135,7 @@ class BookServiceImplTest {
 
         var result = service.convertToDTO(getExpect);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAuthors().size(), result.getAuthors().size());
             assertEquals(expect.getCategories().size(), result.getCategories().size());

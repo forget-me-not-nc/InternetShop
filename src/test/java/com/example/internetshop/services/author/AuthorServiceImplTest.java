@@ -1,11 +1,8 @@
 package com.example.internetshop.services.author;
 
 import com.example.internetshop.model.Author;
-import com.example.internetshop.model.Category;
 import com.example.internetshop.repositories.AuthorRepository;
 import com.example.internetshop.services.author.impls.AuthorServiceImpl;
-import com.example.internetshop.services.category.impls.CategoryServiceImpl;
-import com.example.internetshop.stubs.AccountStub;
 import com.example.internetshop.stubs.AuthorStub;
 import com.example.internetshop.stubs.CategoryStub;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,8 +27,7 @@ class AuthorServiceImplTest {
     private AuthorRepository repository;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         service = new AuthorServiceImpl(repository);
     }
 
@@ -42,9 +38,9 @@ class AuthorServiceImplTest {
         when(repository.findAll(PageRequest.of(CategoryStub.page, CategoryStub.size)))
                 .thenReturn(new PageImpl<Author>(expect));
 
-        var result = service.getAll(0,2);
+        var result = service.getAll(0, 2);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(2L, result.getTotalElements());
 
             var res1 = result.getContent().get(0);
@@ -70,7 +66,7 @@ class AuthorServiceImplTest {
 
         var result = service.get(AuthorStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());
@@ -86,7 +82,7 @@ class AuthorServiceImplTest {
 
         var result = service.create(AuthorStub.generateAuthorModifyRequest());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(result.getId(), expect.getId());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());
@@ -102,7 +98,7 @@ class AuthorServiceImplTest {
 
         var result = service.update(AuthorStub.generateAuthorModifyRequest());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(result.getId(), expect.getId());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());
@@ -128,7 +124,7 @@ class AuthorServiceImplTest {
 
         var result = service.convertToDTO(AuthorStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(result.getId(), expect.getId());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());

@@ -30,24 +30,21 @@ public final class CategoryStub {
                 .build();
     }
 
-    public static CategoryDTO generateDTO()
-    {
+    public static CategoryDTO generateDTO() {
         return CategoryDTO.builder()
                 .id(ID)
                 .name("Name 1")
                 .build();
     }
 
-    public static CategoryDTO generateDTO_2()
-    {
+    public static CategoryDTO generateDTO_2() {
         return CategoryDTO.builder()
                 .id(ID + 1)
                 .name("Name 2")
                 .build();
     }
 
-    public static List<Category> generateCategoriesList()
-    {
+    public static List<Category> generateCategoriesList() {
         return new ArrayList<>(
                 Arrays.asList(
                         Category.builder()

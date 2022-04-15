@@ -1,6 +1,6 @@
 package com.example.internetshop.configurations.security;
 
-import com.example.internetshop.services.security.UserDetailsImpl;
+import com.example.internetshop.security.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,18 +1,11 @@
 package com.example.internetshop.services.order;
 
-import com.example.internetshop.model.Client;
 import com.example.internetshop.model.Order;
-import com.example.internetshop.repositories.*;
+import com.example.internetshop.repositories.OrderRepository;
 import com.example.internetshop.services.account.impls.AccountServiceImpl;
-import com.example.internetshop.services.author.impls.AuthorServiceImpl;
 import com.example.internetshop.services.book.impls.BookServiceImpl;
-import com.example.internetshop.services.category.impls.CategoryServiceImpl;
-import com.example.internetshop.services.client.impls.ClientServiceImpl;
 import com.example.internetshop.services.order.impls.OrderServiceImpl;
-import com.example.internetshop.services.user.impls.UserServiceImpl;
-import com.example.internetshop.stubs.AccountStub;
 import com.example.internetshop.stubs.CategoryStub;
-import com.example.internetshop.stubs.ClientStub;
 import com.example.internetshop.stubs.OrderStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -43,8 +37,7 @@ class OrderServiceImplTest {
     private AccountServiceImpl accountService;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         orderService = new OrderServiceImpl(orderRepository, bookService, accountService);
     }
 
@@ -57,9 +50,9 @@ class OrderServiceImplTest {
 
         when(accountService.convertToDTOString(any())).thenReturn("Account");
 
-        var result = orderService.getAll(0,2);
+        var result = orderService.getAll(0, 2);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(2L, result.getTotalElements());
 
             var res1 = result.getContent().get(0);
@@ -90,7 +83,7 @@ class OrderServiceImplTest {
 
         var result = orderService.get(OrderStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAddress(), result.getAddress());
             assertEquals(accountService.convertToDTOString(expect.getAccount().getId()), result.getAccount());
@@ -109,7 +102,7 @@ class OrderServiceImplTest {
 
         var result = orderService.create(OrderStub.generateOrderCreateRequest());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAddress(), result.getAddress());
             assertEquals(accountService.convertToDTOString(expect.getAccount().getId()), result.getAccount());
@@ -128,7 +121,7 @@ class OrderServiceImplTest {
 
         var result = orderService.update(OrderStub.generateOrderUpdateRequest());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getAddress(), result.getAddress());
             assertEquals(expect.getTotalSum(), result.getTotalSum());

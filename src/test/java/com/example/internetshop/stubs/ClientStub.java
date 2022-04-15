@@ -2,10 +2,7 @@ package com.example.internetshop.stubs;
 
 import com.example.internetshop.DTO.client.req.ClientModify;
 import com.example.internetshop.DTO.client.resp.ClientDTO;
-import com.example.internetshop.DTO.user.req.UserModify;
-import com.example.internetshop.DTO.user.resp.UserDTO;
 import com.example.internetshop.model.Client;
-import com.example.internetshop.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

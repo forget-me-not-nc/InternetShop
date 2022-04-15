@@ -1,11 +1,8 @@
 package com.example.internetshop.services.client;
 
-import com.example.internetshop.model.Category;
 import com.example.internetshop.model.Client;
 import com.example.internetshop.repositories.ClientRepository;
-import com.example.internetshop.services.category.impls.CategoryServiceImpl;
 import com.example.internetshop.services.client.impls.ClientServiceImpl;
-import com.example.internetshop.stubs.CategoryStub;
 import com.example.internetshop.stubs.ClientStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
@@ -29,8 +27,7 @@ class ClientServiceImplTest {
     private ClientRepository repository;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         service = new ClientServiceImpl(repository);
     }
 
@@ -41,9 +38,9 @@ class ClientServiceImplTest {
         when(repository.findAll(PageRequest.of(ClientStub.page, ClientStub.size)))
                 .thenReturn(new PageImpl<Client>(expect));
 
-        var result = service.getAll(0,2);
+        var result = service.getAll(0, 2);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(2L, result.getTotalElements());
 
             var res1 = result.getContent().get(0);
@@ -75,9 +72,9 @@ class ClientServiceImplTest {
 
         var result = service.get(ClientStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
-            assertEquals(expect.getAddress(),result.getAddress());
+            assertEquals(expect.getAddress(), result.getAddress());
             assertEquals(expect.getEmail(), result.getEmail());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());
@@ -94,9 +91,9 @@ class ClientServiceImplTest {
 
         var result = service.create(ClientStub.generateClientModify());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
-            assertEquals(expect.getAddress(),result.getAddress());
+            assertEquals(expect.getAddress(), result.getAddress());
             assertEquals(expect.getEmail(), result.getEmail());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());
@@ -113,9 +110,9 @@ class ClientServiceImplTest {
 
         var result = service.update(ClientStub.generateClientModify());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
-            assertEquals(expect.getAddress(),result.getAddress());
+            assertEquals(expect.getAddress(), result.getAddress());
             assertEquals(expect.getEmail(), result.getEmail());
             assertEquals(expect.getFirstName(), result.getFirstName());
             assertEquals(expect.getLastName(), result.getLastName());

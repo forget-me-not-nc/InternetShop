@@ -23,8 +23,7 @@ public final class AuthorStub {
     public static final Integer page = 0;
     public static final Integer size = 2;
 
-    public static Author generateAuthor()
-    {
+    public static Author generateAuthor() {
         return Author.builder()
                 .id(ID)
                 .info("Info")
@@ -35,8 +34,7 @@ public final class AuthorStub {
                 .build();
     }
 
-    public static List<Author> generateAuthorsList()
-    {
+    public static List<Author> generateAuthorsList() {
         return new ArrayList<>(
                 Arrays.asList(
                         Author.builder()
@@ -59,8 +57,7 @@ public final class AuthorStub {
         );
     }
 
-    public static AuthorModify generateAuthorModifyRequest()
-    {
+    public static AuthorModify generateAuthorModifyRequest() {
         return AuthorModify.builder()
                 .id(ID)
                 .firstName("FirstName")

@@ -1,7 +1,7 @@
 package com.example.internetshop.configurations.filters;
 
 import com.example.internetshop.configurations.security.JwtUtils;
-import com.example.internetshop.services.security.UserDetailsServiceImpl;
+import com.example.internetshop.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

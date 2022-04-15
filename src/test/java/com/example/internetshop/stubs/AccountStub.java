@@ -4,7 +4,6 @@ import com.example.internetshop.DTO.account.req.AccountCreate;
 import com.example.internetshop.DTO.account.req.AccountUpdate;
 import com.example.internetshop.DTO.account.resp.AccountDTO;
 import com.example.internetshop.model.Account;
-import com.example.internetshop.model.Author;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,8 +24,7 @@ public final class AccountStub {
     public static final Integer page = 0;
     public static final Integer size = 2;
 
-    public static Account generateAccount()
-    {
+    public static Account generateAccount() {
         return Account.builder()
                 .id(ID)
                 .user(UserStub.generateUser())

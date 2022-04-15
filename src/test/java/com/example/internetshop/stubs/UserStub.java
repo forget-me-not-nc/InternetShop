@@ -27,7 +27,7 @@ public final class UserStub {
         return User.builder()
                 .id(ID)
                 .password("Password")
-                .login("Login")
+                .username("Login")
                 .build();
     }
 
@@ -37,12 +37,12 @@ public final class UserStub {
                         User.builder()
                                 .id(ID)
                                 .password("Password 1")
-                                .login("Login 1")
+                                .username("Login 1")
                                 .build(),
                         User.builder()
                                 .id(ID + 1)
                                 .password("Password 1")
-                                .login("Login 1")
+                                .username("Login 1")
                                 .build()
                 )
         );

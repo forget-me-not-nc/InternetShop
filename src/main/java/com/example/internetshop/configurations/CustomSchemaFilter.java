@@ -25,14 +25,10 @@ public class CustomSchemaFilter implements SchemaFilter {
 
     @Override
     public boolean includeTable(Table table) {
-        if (    table.getName().equals("ORDERS") ||
-                table.getName().equals("ACCOUNTS") ||
-                table.getName().equals("CLIENTS") ||
-                table.getName().equals("USERS")) {
-            return false;
-        }
-
-        return true;
+        return !table.getName().equals("orders") &&
+                !table.getName().equals("accounts") &&
+                !table.getName().equals("clients") &&
+                !table.getName().equals("users");
     }
 
     @Override

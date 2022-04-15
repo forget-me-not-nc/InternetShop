@@ -5,7 +5,9 @@ import com.example.internetshop.repositories.AccountRepository;
 import com.example.internetshop.services.account.impls.AccountServiceImpl;
 import com.example.internetshop.services.client.impls.ClientServiceImpl;
 import com.example.internetshop.services.user.impls.UserServiceImpl;
-import com.example.internetshop.stubs.*;
+import com.example.internetshop.stubs.AccountStub;
+import com.example.internetshop.stubs.ClientStub;
+import com.example.internetshop.stubs.UserStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,20 +24,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AccountServiceImplTest {
 
+    @Mock
+    AccountRepository repository;
     private AccountServiceImpl service;
-
     @Mock
     private ClientServiceImpl clientService;
-
     @Mock
     private UserServiceImpl userService;
 
-    @Mock
-    AccountRepository repository;
-
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         service = new AccountServiceImpl(repository, userService, clientService);
     }
 
@@ -48,7 +46,7 @@ class AccountServiceImplTest {
 
         var result = service.getAll(AccountStub.page, AccountStub.size);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(2L, result.getTotalElements());
 
             var res1 = result.getContent().get(0);
@@ -77,11 +75,11 @@ class AccountServiceImplTest {
 
         var result = service.get(AccountStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getClient().getId(), result.getClientId());
             assertEquals(expect.getUser().getId(), result.getUserId());
-            assertEquals(expect.getBalance(),result.getBalance());
+            assertEquals(expect.getBalance(), result.getBalance());
             assertEquals(expect.isActive(), result.isActive());
         });
     }
@@ -96,11 +94,11 @@ class AccountServiceImplTest {
 
         var result = service.create(AccountStub.generateAccountCreate());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getClient().getId(), result.getClientId());
             assertEquals(expect.getUser().getId(), result.getUserId());
-            assertEquals(expect.getBalance(),result.getBalance());
+            assertEquals(expect.getBalance(), result.getBalance());
             assertEquals(expect.isActive(), result.isActive());
         });
     }
@@ -114,11 +112,11 @@ class AccountServiceImplTest {
 
         var result = service.update(AccountStub.generateAccountUpdate());
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getClient().getId(), result.getClientId());
             assertEquals(expect.getUser().getId(), result.getUserId());
-            assertEquals(expect.getBalance(),result.getBalance());
+            assertEquals(expect.getBalance(), result.getBalance());
             assertEquals(expect.isActive(), result.isActive());
         });
     }
@@ -142,7 +140,7 @@ class AccountServiceImplTest {
 
         var result = service.findClientByUserId(UserStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getClient().getId(), result.getId());
             assertEquals(expect.getClient().getAddress(), result.getAddress());
             assertEquals(expect.getClient().getFirstName(), result.getFirstName());
@@ -161,7 +159,7 @@ class AccountServiceImplTest {
 
         var result = service.findUserByClientId(ClientStub.ID);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getClient().getId(), result.getId());
             assertEquals(expect.getUser().getUsername(), result.getUsername());
             assertEquals(expect.getUser().getPassword(), result.getPassword());
@@ -206,11 +204,11 @@ class AccountServiceImplTest {
 
         var result = service.convertToDTO(getExpect);
 
-        assertAll(() ->{
+        assertAll(() -> {
             assertEquals(expect.getId(), result.getId());
             assertEquals(expect.getClient().getId(), result.getClientId());
             assertEquals(expect.getUser().getId(), result.getUserId());
-            assertEquals(expect.getBalance(),result.getBalance());
+            assertEquals(expect.getBalance(), result.getBalance());
             assertEquals(expect.isActive(), result.isActive());
         });
     }

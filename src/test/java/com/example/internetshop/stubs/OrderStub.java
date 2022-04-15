@@ -2,12 +2,14 @@ package com.example.internetshop.stubs;
 
 import com.example.internetshop.DTO.order.req.OrderCreate;
 import com.example.internetshop.DTO.order.req.OrderUpdate;
+import com.example.internetshop.DTO.order.resp.OrderDTO;
 import com.example.internetshop.model.Order;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,27 +26,36 @@ public final class OrderStub {
     public static final Integer page = 0;
     public static final Integer size = 2;
 
-    public static Order generateOrder()
-    {
+    public static Order generateOrder() {
         return Order.builder()
                 .id(ID)
                 .account(AccountStub.generateAccount())
                 .orderDate(LocalDateTime.now())
-                .books(new Integer[]{1,2})
+                .books(new Integer[]{1, 2})
                 .address("Address")
                 .totalSum(BigDecimal.TEN)
                 .build();
     }
 
-    public static List<Order> generateOrdersList()
-    {
+    public static OrderDTO generateOrderDTO() {
+        return OrderDTO.builder()
+                .id(ID)
+                .address("Address")
+                .orderDate(LocalDateTime.now())
+                .books((Collections.singletonList(BookStub.generateBookDTO().toString())))
+                .totalSum(BigDecimal.TEN)
+                .account(AccountStub.generateAccountDTO().toString())
+                .build();
+    }
+
+    public static List<Order> generateOrdersList() {
         return new ArrayList<>(
                 Arrays.asList(
                         Order.builder()
                                 .id(ID)
                                 .account(AccountStub.generateAccount())
                                 .orderDate(LocalDateTime.now())
-                                .books(new Integer[]{1,2})
+                                .books(new Integer[]{1, 2})
                                 .address("Address")
                                 .totalSum(BigDecimal.TEN)
                                 .build(),
@@ -52,7 +63,7 @@ public final class OrderStub {
                                 .id(ID + 1)
                                 .account(AccountStub.generateAccount())
                                 .orderDate(LocalDateTime.now())
-                                .books(new Integer[]{1,2})
+                                .books(new Integer[]{1, 2})
                                 .address("Address")
                                 .totalSum(BigDecimal.TEN)
                                 .build()
@@ -60,19 +71,17 @@ public final class OrderStub {
         );
     }
 
-    public static OrderCreate generateOrderCreateRequest()
-    {
+    public static OrderCreate generateOrderCreateRequest() {
         return OrderCreate.builder()
                 .id(ID)
                 .accountId(AccountStub.ID)
                 .address("Address")
-                .booksId(new ArrayList<>())
+                .booksId(new ArrayList<>(Arrays.asList(1, 2)))
                 .totalSum(BigDecimal.TEN)
                 .build();
     }
 
-    public static OrderUpdate generateOrderUpdateRequest()
-    {
+    public static OrderUpdate generateOrderUpdateRequest() {
         return OrderUpdate.builder()
                 .id(ID)
                 .address("Address")

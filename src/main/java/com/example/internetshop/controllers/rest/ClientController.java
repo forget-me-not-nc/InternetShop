@@ -9,6 +9,7 @@ import com.example.internetshop.services.user.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,27 +31,32 @@ public class ClientController {
     private final IAccountService accountService;
     private final IUserService userService;
 
-    @GetMapping()
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<ClientDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size) {
         return ResponseEntity.ok(clientService.getAll(page, size).getContent());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<ClientDTO> get(@PathVariable Integer id) {
         return ResponseEntity.ok(clientService.get(id));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientDTO> update(@PathVariable Integer id, @RequestBody ClientModify entity) {
         return ResponseEntity.ok(clientService.update(entity));
     }
 
-    @PutMapping()
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientDTO> create(@RequestBody ClientModify entity) {
         return ResponseEntity.ok(clientService.create(entity));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         User user = accountService.findUserByClientId(id);
 

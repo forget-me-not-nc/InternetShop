@@ -38,12 +38,12 @@ public class AuthorServiceImpl implements IAuthorService {
     }
 
     @Override
-    public AuthorDTO get(Integer id){
+    public AuthorDTO get(Integer id) {
         return convertToDTO(repository.getById(id));
     }
 
     @Override
-    public AuthorDTO create(AuthorModify entity){
+    public AuthorDTO create(AuthorModify entity) {
         return convertToDTO(repository.save(
                 Author.builder()
                         .firstName(entity.getFirstName())

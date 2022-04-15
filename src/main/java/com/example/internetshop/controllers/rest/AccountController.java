@@ -7,6 +7,7 @@ import com.example.internetshop.services.account.services.IAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,28 +28,33 @@ public class AccountController {
     private final IAccountService accountService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<AccountDTO>> getAll(@RequestParam Integer page, @RequestParam Integer size) {
         return ResponseEntity.ok(accountService.getAll(page, size).getContent());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountDTO> get(@PathVariable Integer id) throws Exception {
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public ResponseEntity<AccountDTO> get(@PathVariable Integer id) {
         return ResponseEntity.ok(accountService.get(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AccountDTO> update(@PathVariable Integer id, @RequestBody AccountUpdate entity) throws Exception {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AccountDTO> update(@PathVariable Integer id, @RequestBody AccountUpdate entity) {
         entity.setId(id);
         return ResponseEntity.ok(accountService.update(entity));
     }
 
-    @PutMapping
-    public ResponseEntity<AccountDTO> create(@RequestBody AccountCreate entity) throws Exception {
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AccountDTO> create(@RequestBody AccountCreate entity) {
         return ResponseEntity.ok(accountService.create(entity));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         accountService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

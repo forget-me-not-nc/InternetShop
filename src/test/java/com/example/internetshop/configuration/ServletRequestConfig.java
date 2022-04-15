@@ -3,10 +3,7 @@ package com.example.internetshop.configuration;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,20 +23,20 @@ public final class ServletRequestConfig {
                 .content(CustomObjectMapper.asJsonString(request));
     }
 
-    private MockHttpServletRequestBuilder putRequest(String url, Object request) {
+    public static MockHttpServletRequestBuilder putRequest(String url, Object request) {
         return put(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(CustomObjectMapper.asJsonString(request));
     }
 
-    private MockHttpServletRequestBuilder getRequest(String url) {
+    public static MockHttpServletRequestBuilder getRequest(String url) {
         return get(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
     }
 
-    private MockHttpServletRequestBuilder deleteRequest(String url) {
+    public static MockHttpServletRequestBuilder deleteRequest(String url) {
         return delete(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);

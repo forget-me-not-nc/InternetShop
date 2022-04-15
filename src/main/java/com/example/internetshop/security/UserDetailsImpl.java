@@ -1,4 +1,4 @@
-package com.example.internetshop.services.security;
+package com.example.internetshop.security;
 
 import com.example.internetshop.configurations.security.Role;
 import com.example.internetshop.model.User;
