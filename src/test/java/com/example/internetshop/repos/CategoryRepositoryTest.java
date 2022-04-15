@@ -24,11 +24,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CategoryRepositoryTest {
 
     @Container
-    public static PostgreSQLContainer<?> postgreDBContainer = new PostgreSQLContainer<>("postgres:9.4")
+    public static PostgreSQLContainer<?> postgreDBContainer = new PostgreSQLContainer<>("postgres")
             .withDatabaseName("internetShop")
             .withUsername("postgres")
             .withPassword("admin")
             .withExposedPorts(5432);
+
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
