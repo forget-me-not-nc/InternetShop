@@ -36,13 +36,12 @@ public class UserController {
     private final IClientService clientService;
     private final AuthService service;
 
-    @PostMapping("/token")
+    @PostMapping("/signIn")
     public ResponseEntity<?> authenticate(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(service.authenticateRequest(request));
     }
 
     @PostMapping("/signUp")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> createUser(@Valid @RequestBody SignUpRequest request) {
         return ResponseEntity.ok(service.signUpUser(request));
     }

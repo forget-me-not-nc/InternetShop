@@ -52,16 +52,15 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers(
-                "/users/token",
+                "/users/signIn",
+                "/users/signUp",
                 "/v2/api-docs",
                 "/configuration/ui",
                 "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui/**",
                 "/swagger-ui.html",
-                "/webjars/**")
-                .permitAll()
-
+                "/webjars/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
